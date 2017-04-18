@@ -13,7 +13,7 @@ if ( ! class_exists( 'WP_SCIF_Admin' ) ) {
         public static function add_shortcode_interface() {
             ob_start();
         ?>
-            <a href="#TB_inline?width=600&height=700&inlineId=select-shortcode-form" class="thickbox button" id="add-shortcode" title="Add Shortcode"><span class="dashicons dashicons-editor-code"></span> Add Shortcode</a>
+            <a href="#TB_inline?width=600&height=700&inlineId=wp-scif-form" class="thickbox button" id="add-shortcode" title="Add Shortcode"><span class="dashicons dashicons-editor-code"></span> Add Shortcode</a>
         <?php
             echo ob_get_clean();
         }
@@ -40,7 +40,9 @@ if ( ! class_exists( 'WP_SCIF_Admin' ) ) {
 		 **/
 		public static function enqueue_admin_assets( $hook ) {
 			if ( in_array( $hook, array( 'post.php', 'post-new.php' ) ) ) {
-				wp_enqueue_script( 'wp-scif', WP_SCIF__SCRIPT_URL . '/wp-scif.min.js', array( 'jquery' ), null, true );
+				wp_enqueue_style( 'wp-scif-css', WP_SCIF__STYLES_URL . '/wp-scif.min.css' );
+				wp_enqueue_script( 'jquery-validation', '//cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.16.0/jquery.validate.min.js', array( 'jquery' ), null, true );
+				wp_enqueue_script( 'wp-scif-js', WP_SCIF__SCRIPT_URL . '/wp-scif.min.js', array( 'jquery' ), null, true );
 			}
 		}
     }

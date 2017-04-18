@@ -16,6 +16,7 @@ define( 'WP_SCIF__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'WP_SCIF__INCLUDES_DIR', WP_SCIF__PLUGIN_DIR . '/includes' );
 define( 'WP_SCIF__PLUGIN_URL', plugins_url( basename( dirname( __FILE__ ) ) ) );
 define( 'WP_SCIF__STATIC_URL', WP_SCIF__PLUGIN_URL . '/static' );
+define( 'WP_SCIF__INCLUDE_URL', WP_SCIF__PLUGIN_URL . '/includes' );
 define( 'WP_SCIF__SCRIPT_URL', WP_SCIF__STATIC_URL . '/js' );
 define( 'WP_SCIF__STYLES_URL', WP_SCIF__STATIC_URL . '/css' );
 
@@ -66,9 +67,6 @@ if ( ! function_exists( 'wp_scif_init' ) ) {
         add_action( 'admin_footer', array( 'WP_SCIF_Admin', 'add_shortcode_interface_modal' ), 10, 0 );
 		// Add the wp-scif javacsript file to admin screens.
 		add_action( 'admin_enqueue_scripts', array( 'WP_SCIF_Admin', 'enqueue_admin_assets' ), 10, 1 );
-
-		// DEBUG
-		add_action( 'wp_scif_add_shortcode', array( 'WP_SCIF_Config', 'add_example_shortcode' ), 10, 1 );
     }
 
     add_action( 'plugins_loaded', 'wp_scif_init', 10, 0 );

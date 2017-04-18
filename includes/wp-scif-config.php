@@ -24,38 +24,5 @@ if ( ! class_exists( 'WP_SCIF_Config' ) ) {
 
 			return $retval;
 		}
-
-		public static function add_example_shortcode( $shortcodes ) {
-			$shortcodes[] = array(
-				'command' => 'event-list',
-				'name' => 'Event List',
-				'desc' => 'Outputs a list of events.',
-				'content' => False,
-				'fields' => array(
-					array(
-						'param' => 'calendar-id',
-						'name' => 'Calendar',
-						'type' => 'email'
-					),
-					array(
-						'param' => 'select-option',
-						'name'  => 'Select Option',
-						'type'  => 'checkbox-list',
-						'options' => array(
-							'option-1' => 'Option 1',
-							'option-2' => 'Option 2',
-							'option-3' => 'Option 3'
-						)
-					),
-					array(
-						'param' => 'do-something',
-						'name'  => 'Do Something',
-						'type'  => 'checkbox'
-					)
-				)
-			);
-
-			return $shortcodes;
-		}
 	}
 }

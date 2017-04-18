@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "module": "none",
+        "noImplicitAny": false,
+        "noEmitOnError": false,
+        "removeComments": true,
+        "sourceMap": false,
+        "types": [
+            "jquery",
+            "tinymce"
+        ]
+    }
+}

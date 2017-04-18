@@ -13,16 +13,16 @@
   "author": "UCF Web Communications",
   "license": "GPL-3.0",
   "devDependencies": {
-    "babel-core": "^6.24.1",
-    "babel-preset-es2015": "^6.24.1",
-    "eslint": "^3.19.0",
+    "@types/jquery": "^2.0.34",
     "gulp": "^3.9.1",
-    "gulp-babel": "^6.1.2",
+    "gulp-autoprefixer": "^3.1.1",
     "gulp-concat": "^2.6.1",
-    "gulp-eslint": "^3.0.1",
-    "gulp-eslint-if-fixed": "^1.0.0",
     "gulp-rename": "^1.2.2",
     "gulp-sourcemaps": "^2.6.0",
-    "gulp-uglify": "^2.1.2"
+    "gulp-tslint": "^8.0.0",
+    "gulp-typescript": "^3.1.6",
+    "gulp-uglify": "^2.1.2",
+    "tslint": "^5.1.0",
+    "typescript": "^2.2.2"
   }
 }

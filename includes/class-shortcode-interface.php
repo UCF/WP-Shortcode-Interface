@@ -50,7 +50,7 @@ if ( ! class_exists( 'WP_SCIF_Shortcode' ) ) {
 		 * @return string | The markup for the description
 		 **/
 		public function get_description_markup() {
-			return sprintf( '<li class="shortcode-%s">%s</li>', $this->command, $this->description );
+			return sprintf( '<p class="shortcode-desc shortcode-%s">%s</p>', $this->command, $this->description );
 		}
 
 		/**
@@ -63,13 +63,19 @@ if ( ! class_exists( 'WP_SCIF_Shortcode' ) ) {
 		 **/
 		public function get_form_markup() {
 			ob_start();
+			?>
+			<div class="shortcode-editor shortcode-<?php echo $this->command; ?>">
+			<?php
 			foreach( $this->fields as $field ) :
 			?>
-				<div class="wp-scif-field">
+				<div class="wp-scif-field-wrapper">
 			<?php echo $this->get_field_markup( $field ); ?>
 				</div>
 			<?php
 			endforeach;
+			?>
+			</div>
+			<?php
 			return ob_get_clean();
 		}
 
@@ -111,6 +117,10 @@ if ( ! class_exists( 'WP_SCIF_Shortcode' ) ) {
 					break;
 			}
 
+			if ( $field['required'] ) {
+				echo $this->get_validation_message( $field );
+			}
+
 			return ob_get_clean();
 		}
 
@@ -125,10 +135,28 @@ if ( ! class_exists( 'WP_SCIF_Shortcode' ) ) {
 		 **/
 		private function get_field_label_markup( $field ) {
 			ob_start();
+			// Checkbox labels are custom.
+			if ( $field['type'] === 'checkbox' ) return;
 		?>
-			<label for="<?php echo sanitize_title( $field['name'] ); ?>">
+			<label class="field-label" for="<?php echo $field['param']; ?>">
 				<?php echo $field['name']; ?>
+				<?php if ( $field['required'] ) : ?>
+					<span class="required">*</span>
+				<?php endif; ?>
 			</label>
+			<?php if ( $field['desc'] ) : ?>
+				<p class="field-desc"><?php echo $field['desc']; ?></p>
+			<?php endif; ?>
+		<?php
+			return ob_get_clean();
+		}
+
+		private function get_validation_message( $field ) {
+			ob_start();
+		?>
+			<p class="error-message <?php echo $field['param']; ?>-error">
+				<span class="required"><?php echo $field['name']; ?> is required.</span>
+			</p>
 		<?php
 			return ob_get_clean();
 		}
@@ -145,7 +173,7 @@ if ( ! class_exists( 'WP_SCIF_Shortcode' ) ) {
 		private function get_text_field_markup( $field ) {
 			ob_start();
 		?>
-			<input type="<?php echo $field['type']; ?>" data-scif-param="<?php echo $field['param']; ?>" data-scif-required="<?php echo $field['required'] ?>">
+			<input class="wp-scif-field" type="<?php echo $field['type']; ?>" data-scif-param="<?php echo $field['param']; ?>" data-scif-required="<?php echo $field['required'] ?>">
 		<?php
 			return ob_get_clean();
 		}
@@ -162,7 +190,7 @@ if ( ! class_exists( 'WP_SCIF_Shortcode' ) ) {
 		private function get_select_field_markup( $field ) {
 			ob_start();
 		?>
-			<select class="select" data-scif-param="<?php echo $field['param']; ?>" data-scif-required="<?php echo $field['required']; ?>">
+			<select class="select wp-scif-field" data-scif-param="<?php echo $field['param']; ?>" data-scif-required="<?php echo $field['required']; ?>">
 			<?php foreach( $field['options'] as $key => $val ) : ?>
 				<option value="<?php echo $key; ?>"><?php echo $val; ?></option>
 			<?php endforeach; ?>
@@ -185,7 +213,7 @@ if ( ! class_exists( 'WP_SCIF_Shortcode' ) ) {
 			$param = $field['param'];
 			foreach( $field['options'] as $key => $val ) :
 		?>
-			<input type="radio" name="<?php echo $param; ?>" value="<?php echo $key; ?>"><label for="<?php echo $key; ?>"><?php echo $val; ?></label>
+			<input class="wp-scif-field" type="radio" name="<?php echo $param; ?>" value="<?php echo $key; ?>"><label for="<?php echo $key; ?>"><?php echo $val; ?></label>
 		<?php
 			endforeach;
 			return ob_get_clean();
@@ -203,7 +231,8 @@ if ( ! class_exists( 'WP_SCIF_Shortcode' ) ) {
 		private function get_checkbox_field_markup( $field ) {
 			ob_start();
 		?>
-			<input type="checkbox" name="<?php echo $field['param']; ?>"><label for="<?php echo $field['param']; ?>"><?php $field['name']; ?></label>
+			<input class="wp-scif-field" type="checkbox" name="<?php echo $field['param']; ?>" data-scif-param="<?php echo $field['param']; ?>">
+			<label class="checkbox-label" for="<?php echo $field['param']; ?>"><?php echo $field['name']; ?></label>
 		<?php
 			return ob_get_clean();
 		}
@@ -223,7 +252,7 @@ if ( ! class_exists( 'WP_SCIF_Shortcode' ) ) {
 			foreach( $field['options'] as $key => $val ) :
 		?>
 			<div class="checkbox">
-				<input type="checkbox" name="<?php echo $param; ?>" value="<?php echo $key; ?>">
+				<input class="wp-scif-field checkbox-list-item" type="checkbox" name="<?php echo $param; ?>" value="<?php echo $key; ?>" data-scif-param="<?php echo $field['param']; ?>">
 				<label for="<?php echo $param; ?>"><?php echo $val; ?></label>
 			</div>
 		<?php

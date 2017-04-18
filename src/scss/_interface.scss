@@ -1,0 +1,33 @@
+#wp-scif-select {
+  margin-bottom: 1em;
+}
+
+.shortcode-desc {
+  margin-bottom: 1em;
+  margin-top: 0;
+}
+
+.wp-scif-field-wrapper {
+  display: block;
+  margin-bottom: 1em;
+
+  .field-label {
+    display: block;
+    font-weight: 700;
+  }
+
+  .field-desc {
+    color: #737373;
+    margin: 0;
+  }
+}
+
+.shortcode-desc,
+.shortcode-editor,
+.error-message {
+  display: none;
+
+  &.active {
+    display: block;
+  }
+}
