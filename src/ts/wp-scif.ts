@@ -139,9 +139,7 @@ namespace WPSCIF {
         onSelectChanged(e) {
             this.selectedShortcode = this.$select.val();
 
-            if ( this.selectedShortcode.length === 0 ) {
-                jQuery('#wp-scif-form-inner .active').removeClass('active');
-            }
+            jQuery('#wp-scif-form-inner .active').removeClass('active');
 
             jQuery('.shortcode-' + this.selectedShortcode).addClass('active');
         }
