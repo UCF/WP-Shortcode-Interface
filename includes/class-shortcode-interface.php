@@ -64,12 +64,12 @@ if ( ! class_exists( 'WP_SCIF_Shortcode' ) ) {
 		public function get_form_markup() {
 			ob_start();
 			?>
-			<div class="shortcode-editor shortcode-<?php echo $this->command; ?>">
+			<div class="shortcode-editor shortcode-<?php echo $this->command; ?>" <?php if ( $this->content ) { ?>data-scif-allows-content<?php } ?>>
 			<?php
 			foreach( $this->fields as $field ) :
 			?>
 				<div class="wp-scif-field-wrapper">
-			<?php echo $this->get_field_markup( $field ); ?>
+				<?php echo $this->get_field_markup( $field ); ?>
 				</div>
 			<?php
 			endforeach;
