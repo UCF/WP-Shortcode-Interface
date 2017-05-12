@@ -247,6 +247,10 @@ if ( ! class_exists( 'WP_SCIF_Shortcode' ) ) {
 		private function get_checkbox_field_markup( $field ) {
 			ob_start();
 		?>
+			<strong class="field-label"><?php echo $field['name']; ?></strong>
+			<?php if ( $field['desc'] ) : ?>
+				<p class="field-desc"><?php echo $field['desc']; ?></p>
+			<?php endif; ?>
 			<label class="checkbox-label">
 				<input class="wp-scif-field" type="checkbox" name="<?php echo $field['param']; ?>" data-scif-param="<?php echo $field['param']; ?>">
 				<?php echo $field['name']; ?>
@@ -269,6 +273,10 @@ if ( ! class_exists( 'WP_SCIF_Shortcode' ) ) {
 			$param = $field['param'];
 			foreach( $field['options'] as $key => $val ) :
 		?>
+			<strong class="field-label"><?php echo $field['name']; ?></strong>
+			<?php if ( $field['desc'] ) : ?>
+				<p class="field-desc"><?php echo $field['desc']; ?></p>
+			<?php endif; ?>
 			<div class="checkbox">
 				<label>
 					<input class="wp-scif-field checkbox-list-item" type="checkbox" name="<?php echo $param; ?>" value="<?php echo $key; ?>" data-scif-param="<?php echo $field['param']; ?>">
