@@ -10,7 +10,7 @@ namespace WPSCIF {
         public selectedShortcode: string;
         public $activeShortcodeEditor: any;
         public $activeShortcodeDescription: any;
-        public $fields: any;
+        public $activeFields: any;
         public editor: any;
 
         constructor() {
@@ -21,7 +21,7 @@ namespace WPSCIF {
             this.selectedShortcode = null;
             this.$activeShortcodeEditor = null;
             this.$activeShortcodeDescription = null;
-            this.$fields = null;
+            this.$activeFields = null;
 
             this.$toggle.click( (e) => { this.resetForm() } );
             this.$submitBtn.click( (e) => { this.onSubmitBtnClick(e) });
@@ -31,9 +31,9 @@ namespace WPSCIF {
         resetForm() {
             this.editor = tinyMCE.activeEditor ? tinyMCE.activeEditor : null;
             this.$select.val('').trigger('change');
-            if (this.$fields) {
-                this.$fields.prop('checked', false);
-                this.$fields.each( (i, field) => {
+            if (this.$activeFields) {
+                this.$activeFields.prop('checked', false);
+                this.$activeFields.each( (i, field) => {
                     var $field = jQuery(field);
                     if ( $field.prop['type'] !== 'checkbox' ) {
                         $field.val('');
@@ -45,8 +45,8 @@ namespace WPSCIF {
         validateForm() : boolean {
             var errors = 0;
 
-            if (this.$fields) {
-                this.$fields.each( (i, field) => {
+            if (this.$activeFields) {
+                this.$activeFields.each( (i, field) => {
                     var $field = jQuery(field),
                         name = $field.data('scif-param'),
                         required = $field.data('scif-required');
@@ -77,7 +77,7 @@ namespace WPSCIF {
                 allowsContent: this.$activeShortcodeEditor.data('scif-allows-content') !== undefined
             };
 
-            this.$fields.each( (i, field) => {
+            this.$activeFields.each( (i, field) => {
                 var $field = jQuery(field),
                     param  = $field.data('scif-param'),
                     value  = '';
@@ -167,7 +167,7 @@ namespace WPSCIF {
             this.$activeShortcodeEditor = $activeShortcodeElems.filter('.shortcode-editor');
             this.$activeShortcodeDescription = $activeShortcodeElems.filter('.shortcode-desc');
 
-            this.$fields = this.$activeShortcodeEditor.find('.wp-scif-field');
+            this.$activeFields = this.$activeShortcodeEditor.find('.wp-scif-field');
         }
     }
 }
