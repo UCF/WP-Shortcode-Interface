@@ -10,7 +10,9 @@ if ( ! class_exists( 'WP_SCIF_Shortcode' ) ) {
 			$name,
 			$description,
 			$fields,
-			$content;
+			$content,
+			$preview=FALSE,
+			$styles=null;
 
 		/**
 		 * Primary constructor for Shortcode object
@@ -27,6 +29,8 @@ if ( ! class_exists( 'WP_SCIF_Shortcode' ) ) {
 			$this->fields = $args['fields'];
 			$this->content = $args['content'];
 			$this->description = $args['desc'];
+			$this->preview = $args['preview'];
+			$this->styles = $args['styles'];
 		}
 
 		/**
@@ -74,6 +78,9 @@ if ( ! class_exists( 'WP_SCIF_Shortcode' ) ) {
 			<?php
 			endforeach;
 			?>
+			<?php if ( $this->preview ) : ?>
+				<iframe id="<?php echo $this->command; ?>-preview" data-styles="<?php echo $this->styles; ?>"></iframe>
+			<?php endif; ?>
 			</div>
 			<?php
 			return ob_get_clean();
@@ -110,6 +117,9 @@ if ( ! class_exists( 'WP_SCIF_Shortcode' ) ) {
 					break;
 				case 'checkbox-list':
 					echo $this->get_checkbox_list_field_markup( $field );
+					break;
+				case 'preview':
+					echo $this->get_preview_iframe_markup( $field );
 					break;
 				default:
 					$field['type'] = 'text';

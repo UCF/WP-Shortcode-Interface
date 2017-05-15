@@ -45,5 +45,15 @@ if ( ! class_exists( 'WP_SCIF_Admin' ) ) {
 				wp_enqueue_script( 'wp-scif-js', WP_SCIF__SCRIPT_URL . '/wp-scif.min.js', array( 'jquery' ), null, true );
 			}
 		}
+
+		public static function render_shortcode() {
+			$data = $_GET['shortcode'];
+			$shortcode = html_entity_decode( $data );
+			$return_content = do_shortcode( $shortcode );
+			$retval = array(
+				'markup' => $return_content
+			);
+			wp_send_json( $retval );
+		}
     }
 }

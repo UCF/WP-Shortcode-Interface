@@ -67,6 +67,8 @@ if ( ! function_exists( 'wp_scif_init' ) ) {
         add_action( 'admin_footer', array( 'WP_SCIF_Admin', 'add_shortcode_interface_modal' ), 10, 0 );
 		// Add the wp-scif javacsript file to admin screens.
 		add_action( 'admin_enqueue_scripts', array( 'WP_SCIF_Admin', 'enqueue_admin_assets' ), 10, 1 );
+		// Add the render_post admin action for preview fields.
+		add_action( 'wp_ajax_render_shortcode', array( 'WP_SCIF_Admin', 'render_shortcode' ), 10, 0 );
     }
 
     add_action( 'plugins_loaded', 'wp_scif_init', 10, 0 );
