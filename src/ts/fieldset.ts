@@ -12,8 +12,7 @@ namespace WPSCIF {
             this.command = command;
             this.$container = jQuery('.shortcode-editor.shortcode-' + command);
             this.$description = jQuery('.shortcode-desc.shortcode-' + this.command);
-            this.allowContent = <boolean>this.$container.data('scif-allows-content');
-            console.log(this.allowContent);
+            this.allowContent = this.$container.is('[data-scif-allows-content]');
             this.fields = new Array<Fields.Field>();
             var $fields = this.$container.find('.wp-scif-field');
 
