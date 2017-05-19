@@ -13,20 +13,20 @@ namespace WPSCIF.Fields {
             this.param = this.$field.data('scif-param');
         }
 
-        public is_valid(): boolean {
+        public isValid(): boolean {
             // If required, it must have value
-            if (this.required && ! this.get_value()) {
+            if (this.required && ! this.getValue()) {
                 return false;
             }
             return true;
         }
 
-        public get_value() {
+        public getValue() {
             return this.$field.val();
         }
 
-        public get_output() {
-            return this.param + '="' + this.get_value() + '"';
+        public getOutput() {
+            return this.param + '="' + this.getValue() + '"';
         }
     }
 }

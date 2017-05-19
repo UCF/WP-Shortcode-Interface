@@ -14,7 +14,7 @@ namespace WPSCIF {
 
             $fields.each( (idx, obj) => {
                 var $field = jQuery(obj);
-                this.fields.push(new Fields.TextField($field));
+                this.fields.push(this.createField(obj));
             });
         }
 
@@ -31,6 +31,8 @@ namespace WPSCIF {
                         return new Fields.TextField($field);
                     case 'date':
                         return new Fields.DateField($field);
+                    case 'checkbox':
+                        return new Fields.CheckboxField($field);
                     default:
                         return new Fields.TextField($field);
                 }
@@ -39,6 +41,12 @@ namespace WPSCIF {
 
         public getFields() {
             return this.fields;
+        }
+
+        public getValues() {
+            this.fields.forEach( (field) => {
+                console.log(field.param + '=' + field.getValue());
+            });
         }
     }
 }

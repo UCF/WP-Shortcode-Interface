@@ -7,11 +7,11 @@ namespace WPSCIF.Fields {
             this.inputMask = this.$field.data('wpscif-valid-regex');
         }
 
-        public is_valid() : boolean {
-            var valid = super.is_valid();
+        public isValid() : boolean {
+            var valid = super.isValid();
 
             var pattern = new RegExp(this.inputMask);
-            var valid = pattern.test(this.get_value());
+            var valid = pattern.test(this.getValue());
 
             return valid;
         }
