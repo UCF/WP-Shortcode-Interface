@@ -5,6 +5,7 @@
         "noEmitOnError": false,
         "removeComments": true,
         "sourceMap": false,
+        "noResolve": false,
         "types": [
             "jquery",
             "tinymce"

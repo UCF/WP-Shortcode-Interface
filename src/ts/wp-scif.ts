@@ -1,3 +1,5 @@
+/// <reference path="./wp-scif.d.ts" />
+
 declare var tinyMCE: any;
 declare var send_to_editor: Function;
 declare var ajaxurl: string;
@@ -163,12 +165,15 @@ namespace WPSCIF {
 
             if (data.command){
                 var shortcode = this.buildShortcode(data);
-
+                // var stylesheet = jQuery('#' + this.selectedShortcode + '-preview').data('styles');
+                // var link  = jQuery('link').attr('href', stylesheet);
+                jQuery('head', window.frames[this.selectedShortcode + '-preview']).append('Hello world');
                 jQuery.getJSON(ajaxurl, {
                     action: 'render_shortcode',
                     shortcode: shortcode
                 }, (data) => {
                     var ifrm = <any>document.getElementById(this.selectedShortcode + '-preview');
+                    
                     ifrm = ifrm.contentWindow || ifrm.contentDocument.document || ifrm.contentDocument;
                     ifrm.document.open();
                     ifrm.document.write(data.markup);
