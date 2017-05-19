@@ -24,6 +24,12 @@ namespace WPSCIF {
             this.fields.forEach( (field) => {
                 field.setDefaultValue();
             });
+
+            this.$container.addClass('active');
+        }
+
+        public destroy() {
+            this.$container.removeClass('acitve');
         }
 
         private createField(obj) {
@@ -51,10 +57,30 @@ namespace WPSCIF {
             return this.fields;
         }
 
-        public getValues() {
+        public isValid() {
+            var errorCount: number = 0;
+
             this.fields.forEach( (field) => {
-                console.log(field.param + '=' + field.getValue());
+                if (!field.isValid) {
+                    errorCount++;
+                }
             });
+
+            if (errorCount > 0) {
+                return false;
+            }
+
+            return true;
+        }
+
+        public getValues() {
+            var retval = Array<string>();
+
+            this.fields.forEach( (field) => {
+                retval.push(field.param + '=' + field.getValue());
+            });
+
+            return retval;
         }
     }
 }

@@ -18,8 +18,10 @@ namespace WPSCIF.Fields {
         public isValid(): boolean {
             // If required, it must have value
             if (this.required && ! this.getValue()) {
+                jQuery('.' + this.param + '-error').addClass('active');
                 return false;
             }
+            jQuery('.' + this.param + '-error').removeClass('active');
             return true;
         }
 

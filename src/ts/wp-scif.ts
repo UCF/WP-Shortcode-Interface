@@ -26,23 +26,8 @@ namespace WPSCIF {
             this.$activeShortcodeDescription = null;
             this.$activeFields = null;
 
-            this.$toggle.click( (e) => { this.resetForm() } );
             this.$submitBtn.click( (e) => { this.onSubmitBtnClick(e) });
             this.$select.change( (e) => { this.onSelectChanged(e) });
-        }
-
-        resetForm() {
-            this.editor = tinyMCE.activeEditor ? tinyMCE.activeEditor : null;
-            this.$select.val('').trigger('change');
-            if (this.$activeFields) {
-                this.$activeFields.prop('checked', false);
-                this.$activeFields.each( (i, field) => {
-                    var $field = jQuery(field);
-                    if ( $field.prop['type'] !== 'checkbox' ) {
-                        $field.val('');
-                    }
-                });
-            }
         }
 
         validateForm() : boolean {
