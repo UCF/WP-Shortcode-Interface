@@ -61,7 +61,13 @@ namespace WPSCIF {
         }
 
         initPreview() {
-
+            var shortcode = this.buildShortcode();
+            jQuery.getJSON(ajaxurl, {
+                action: 'render_shortcode',
+                shortcode: shortcode
+            }, function(data) {
+                console.log(data.markup);
+            });
         }
     }
 }
