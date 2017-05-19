@@ -6,11 +6,14 @@ namespace WPSCIF {
         private fields: Array<Fields.Field>;
         private $container: any;
         private $description: any;
+        public allowContent: boolean;
         
         constructor(command) {
             this.command = command;
             this.$container = jQuery('.shortcode-editor.shortcode-' + command);
             this.$description = jQuery('.shortcode-desc.shortcode-' + this.command);
+            this.allowContent = <boolean>this.$container.data('scif-allows-content');
+            console.log(this.allowContent);
             this.fields = new Array<Fields.Field>();
             var $fields = this.$container.find('.wp-scif-field');
 
@@ -98,7 +101,11 @@ namespace WPSCIF {
             }
 
             if (text) {
-                retval += text + '[/' + this.command + ']';
+                retval += text;
+            }
+
+            if (this.allowContent) {
+                retval += '[/' + this.command + ']';
             }
 
             return retval;
