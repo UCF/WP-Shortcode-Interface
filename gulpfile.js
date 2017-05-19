@@ -30,10 +30,10 @@ gulp.task('scss-lint', function() {
 gulp.task('sass', ['scss-lint'], function() {
   gulp.src(config.src.scss + '/wp-scif.scss')
     .pipe(sass().on('error', sass.logError))
-    .pipe(cleanCss({compatibility: 'ie8'}))
+    .pipe(cleanCss())
     .pipe(rename('wp-scif.min.css'))
     .pipe(autoprefixer({
-      browsers: ['last 2 version', 'ie >= 8'],
+      browsers: ['last 2 versions'],
       cascade: false
     }))
     .pipe(gulp.dest(config.dist.css));

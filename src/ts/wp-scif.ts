@@ -7,18 +7,24 @@ declare var ajaxurl: string;
 namespace WPSCIF {
     export class ShortcodeInterface {
         public $toggle: any;
+        public $interface: any;
         public $submitBtn: any;
         public $select: any;
         public selectedShortcode: string;
-        public $fields: any;
+        public $activeShortcodeEditor: any;
+        public $activeShortcodeDescription: any;
+        public $activeFields: any;
         public editor: any;
 
         constructor() {
             this.$toggle = jQuery('#add-shortcode');
-            this.$submitBtn = jQuery('#wp-scif-submit');
-            this.$select = jQuery('#wp-scif-select');
+            this.$interface = jQuery('#wp-scif-form-inner');
+            this.$submitBtn = this.$interface.find('#wp-scif-submit');
+            this.$select = this.$interface.find('#wp-scif-select');
             this.selectedShortcode = null;
-            this.$fields = jQuery('.wp-scif-field');
+            this.$activeShortcodeEditor = null;
+            this.$activeShortcodeDescription = null;
+            this.$activeFields = null;
 
             this.$toggle.click( (e) => { this.resetForm() } );
             this.$submitBtn.click( (e) => { this.onSubmitBtnClick(e) });
@@ -28,29 +34,37 @@ namespace WPSCIF {
         resetForm() {
             this.editor = tinyMCE.activeEditor ? tinyMCE.activeEditor : null;
             this.$select.val('').trigger('change');
-            this.$fields.prop('checked', false);
-            this.$fields.each( (i, field) => {
-                var $field = jQuery(field);
-                if ( $field.prop['type'] !== 'checkbox' ) {
-                    $field.val('');
-                }
-            });
+            if (this.$activeFields) {
+                this.$activeFields.prop('checked', false);
+                this.$activeFields.each( (i, field) => {
+                    var $field = jQuery(field);
+                    if ( $field.prop['type'] !== 'checkbox' ) {
+                        $field.val('');
+                    }
+                });
+            }
         }
 
         validateForm() : boolean {
             var errors = 0;
-            this.$fields.each( (i, field) => {
-                var $field = jQuery(field),
-                    name = $field.data('scif-param'),
-                    required = $field.data('scif-required');
 
-                if ( required && ( $field.val() === '' ) ) {
-                    jQuery( '.' + name + '-error' ).addClass('active');
-                    errors++;
-                } else {
-                    jQuery( '.' + name + '-error' ).removeClass('active');
-                }
-            });
+            if (this.$activeFields) {
+                this.$activeFields.each( (i, field) => {
+                    var $field = jQuery(field),
+                        name = $field.data('scif-param'),
+                        required = $field.data('scif-required');
+
+                    if ( required && ( $field.val() === '' ) ) {
+                        jQuery( '.' + name + '-error' ).addClass('active');
+                        errors++;
+                    } else {
+                        jQuery( '.' + name + '-error' ).removeClass('active');
+                    }
+                } );
+            }
+            else {
+                errors++;
+            }
 
             if ( errors ) {
                 return false;
@@ -67,10 +81,11 @@ namespace WPSCIF {
         getFormValues() {
             var data = {
                 command: this.selectedShortcode,
-                params: {}
+                params: {},
+                allowsContent: this.$activeShortcodeEditor.data('scif-allows-content') !== undefined
             };
 
-            this.$fields.each( (i, field) => {
+            this.$activeFields.each( (i, field) => {
                 var $field = jQuery(field),
                     param  = $field.data('scif-param'),
                     value  = '';
@@ -132,7 +147,10 @@ namespace WPSCIF {
             text += ']';
 
             if ( enclosingText ) {
-                text += enclosingText + '[/' + data.command + ']';
+                text += enclosingText;
+            }
+            if ( data.allowsContent ) {
+                text += '[/' + data.command + ']';
             }
 
             return text;
@@ -140,9 +158,6 @@ namespace WPSCIF {
 
         onSubmitBtnClick(e) {
             e.preventDefault();
-            var shortcode = this.$select.val();
-
-            var $fields = jQuery('.shortcode-' + shortcode).find('.wp-scif-field');
 
             if ( this.validateForm() ) {
                 this.parseShortcode();
@@ -152,18 +167,27 @@ namespace WPSCIF {
         onSelectChanged(e) {
             this.selectedShortcode = this.$select.val();
 
-            if ( this.selectedShortcode.length === 0 ) {
-                jQuery('#wp-scif-form-inner .active').removeClass('active');
+            if (this.$activeShortcodeEditor) {
+                this.$activeShortcodeEditor.removeClass('active');
+            }
+            if (this.$activeShortcodeDescription) {
+                this.$activeShortcodeDescription.removeClass('active');
             }
 
-            jQuery('.shortcode-' + this.selectedShortcode).addClass('active');
+            // $activeShortcodeElems references both the shortcode editor and
+            // the shortcode description
+            var $activeShortcodeElems = this.$interface.find('.shortcode-' + this.selectedShortcode).addClass('active');
+            this.$activeShortcodeEditor = $activeShortcodeElems.filter('.shortcode-editor');
+            this.$activeShortcodeDescription = $activeShortcodeElems.filter('.shortcode-desc');
+            this.$activeFields = this.$activeShortcodeEditor.find('.wp-scif-field');
+
             this.initPreview();
         }
 
         initPreview() {
             var data = this.getFormValues();
 
-            if (data.command){
+            if (data.command) {
                 var shortcode = this.buildShortcode(data);
                 // var stylesheet = jQuery('#' + this.selectedShortcode + '-preview').data('styles');
                 // var link  = jQuery('link').attr('href', stylesheet);
@@ -178,8 +202,8 @@ namespace WPSCIF {
                     ifrm.document.open();
                     ifrm.document.write(data.markup);
                     ifrm.document.close();
-                });   
-            }         
+                });
+            }
         }
     }
 }
