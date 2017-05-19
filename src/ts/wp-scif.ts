@@ -24,15 +24,7 @@ namespace WPSCIF {
             this.$submitBtn.click( (e) => { this.onSubmitBtnClick(e) });
             this.$select.change( (e) => { this.onSelectChanged(e) });
         }
-
-        validateForm() {
-            return true;
-        }
-
-        parseShortcode() {
-            this.insertShortcode();
-        }
-
+        
         insertShortcode() {
             var enclosingText = null;
 
@@ -47,7 +39,7 @@ namespace WPSCIF {
         onSubmitBtnClick(e) {
             e.preventDefault();
 
-            if ( this.validateForm() ) {
+            if ( this.activeFieldSet.isValid() ) {
                 this.insertShortcode();
             }
         }
