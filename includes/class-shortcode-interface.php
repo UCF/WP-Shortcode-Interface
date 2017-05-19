@@ -12,7 +12,8 @@ if ( ! class_exists( 'WP_SCIF_Shortcode' ) ) {
 			$fields,
 			$content,
 			$preview=FALSE,
-			$styles=null;
+			$styles=null,
+			$prefix;
 
 		/**
 		 * Primary constructor for Shortcode object
@@ -177,7 +178,7 @@ if ( ! class_exists( 'WP_SCIF_Shortcode' ) ) {
 		private function get_validation_message( $field ) {
 			ob_start();
 		?>
-			<p class="error-message <?php echo $field['param']; ?>-error">
+			<p id="#<?php this.get_field_input_id( $field );?>-error" class="error-message">
 				<span class="required"><?php echo $field['name']; ?> is required.</span>
 			</p>
 		<?php

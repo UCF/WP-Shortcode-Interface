@@ -4,9 +4,11 @@ namespace WPSCIF.Fields {
         public required: boolean;
         public param: string;
         public default: string;
+        private fieldID: string;
 
         constructor($field: any) {
             this.$field = $field;
+            this.fieldID = this.$field.attr('id');
             this.required = <boolean>this.$field.data('scif-required');
             if (typeof this.required === "undefined") {
                 this.required = false;
@@ -16,12 +18,13 @@ namespace WPSCIF.Fields {
         }
 
         public isValid(): boolean {
+            var id = '#' + this.fieldID + '-' + this.param + '-error';
             // If required, it must have value
             if (this.required && ! this.getValue()) {
-                jQuery('.' + this.param + '-error').addClass('active');
+                jQuery(id).addClass('active');
                 return false;
             }
-            jQuery('.' + this.param + '-error').removeClass('active');
+            jQuery(id).removeClass('active');
             return true;
         }
 
@@ -31,6 +34,14 @@ namespace WPSCIF.Fields {
             } else {
                 this.$field.val('');
             }
+        }
+
+        public hasValue() {
+            if (this.getValue()) {
+                return true;
+            }
+
+            return false;
         }
 
         public getValue() {

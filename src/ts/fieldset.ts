@@ -5,10 +5,12 @@ namespace WPSCIF {
         private command: string;
         private fields: Array<Fields.Field>;
         private $container: any;
+        private $description: any;
         
         constructor(command) {
             this.command = command;
             this.$container = jQuery('.shortcode-editor.shortcode-' + command);
+            this.$description = jQuery('.shortcode-desc.shortcode-' + this.command);
             this.fields = new Array<Fields.Field>();
             var $fields = this.$container.find('.wp-scif-field');
 
@@ -26,10 +28,12 @@ namespace WPSCIF {
             });
 
             this.$container.addClass('active');
+            this.$description.addClass('active');
         }
 
         public destroy() {
-            this.$container.removeClass('acitve');
+            this.$container.removeClass('active');
+            this.$description.removeClass('active');
         }
 
         private createField(obj) {
@@ -77,8 +81,25 @@ namespace WPSCIF {
             var retval = Array<string>();
 
             this.fields.forEach( (field) => {
-                retval.push(field.param + '=' + field.getValue());
+                if (field.hasValue()) {
+                    retval.push(field.getOutput());
+                }
             });
+
+            return retval;
+        }
+
+        public buildShortcode(text='') {
+            var retval = '[' + this.command;
+            var outputArr = this.getValues();
+            
+            if (outputArr.length > 0) {
+                retval += ' ' + outputArr.join(' ') + ']';
+            }
+
+            if (text) {
+                retval += text + '[/' + this.command + ']';
+            }
 
             return retval;
         }
