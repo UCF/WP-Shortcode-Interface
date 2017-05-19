@@ -3,6 +3,7 @@ namespace WPSCIF.Fields {
         protected $field: any;
         public required: boolean;
         public param: string;
+        public default: string;
 
         constructor($field: any) {
             this.$field = $field;
@@ -11,6 +12,7 @@ namespace WPSCIF.Fields {
                 this.required = false;
             }
             this.param = this.$field.data('scif-param');
+            this.default = this.$field.data('scif-default');
         }
 
         public isValid(): boolean {
@@ -19,6 +21,14 @@ namespace WPSCIF.Fields {
                 return false;
             }
             return true;
+        }
+
+        public setDefaultValue() {
+            if (this.default) {
+                this.$field.val(this.default);
+            } else {
+                this.$field.val('');
+            }
         }
 
         public getValue() {

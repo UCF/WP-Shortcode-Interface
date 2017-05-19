@@ -16,6 +16,14 @@ namespace WPSCIF {
                 var $field = jQuery(obj);
                 this.fields.push(this.createField(obj));
             });
+
+            this.init();
+        }
+
+        private init() {
+            this.fields.forEach( (field) => {
+                field.setDefaultValue();
+            });
         }
 
         private createField(obj) {

@@ -7,5 +7,13 @@ namespace WPSCIF.Fields {
         public getValue() {
             return this.$field.is(':checked');
         }
+
+        public setDefaultValue() {
+            if (this.default !== null ) {
+                this.$field.prop('checked', true);
+            } else {
+                this.$field.prop('checked', false);
+            }
+        }
     }
 }
