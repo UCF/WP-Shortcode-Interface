@@ -24,15 +24,19 @@ namespace WPSCIF {
             this.$submitBtn.click( (e) => { this.onSubmitBtnClick(e) });
             this.$select.change( (e) => { this.onSelectChanged(e) });
         }
-        
-        insertShortcode() {
+
+        buildShortcode() {
             var enclosingText = null;
 
             if (this.editor) {
                 enclosingText = this.editor.selection.getContent();
             }
 
-            var text = this.activeFieldSet.buildShortcode(enclosingText);
+            return this.activeFieldSet.buildShortcode(enclosingText);
+        }
+
+        insertShortcode() {
+            var text = this.buildShortcode();
             send_to_editor( text );
         }
 
