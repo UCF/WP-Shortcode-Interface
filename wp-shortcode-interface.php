@@ -65,6 +65,8 @@ if ( ! function_exists( 'wp_scif_init' ) ) {
         add_action( 'media_buttons', array( 'WP_SCIF_Admin', 'add_shortcode_interface' ), 10, 0 );
         // Add the shortcode interface modal to the post edit and add pages.
         add_action( 'admin_footer', array( 'WP_SCIF_Admin', 'add_shortcode_interface_modal' ), 10, 0 );
+		// Add the admin action that renders the preview window iframe content.
+		add_action( 'admin_post_render_preview', array( 'WP_SCIF_Admin', 'render_iframe_content' ), 10, 0 );
 		// Add the wp-scif javacsript file to admin screens.
 		add_action( 'admin_enqueue_scripts', array( 'WP_SCIF_Admin', 'enqueue_admin_assets' ), 10, 1 );
 		// Add the render_post admin action for preview fields.

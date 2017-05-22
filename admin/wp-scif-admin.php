@@ -46,6 +46,12 @@ if ( ! class_exists( 'WP_SCIF_Admin' ) ) {
 			}
 		}
 
+		/**
+		 * Renders the provided shortcode to html
+		 * and returns the markup
+		 * @author Jim Barnes
+		 * @since 1.0.0
+		 **/
 		public static function render_shortcode() {
 			$data = $_GET['shortcode'];
 			$shortcode = html_entity_decode( $data );
@@ -54,6 +60,44 @@ if ( ! class_exists( 'WP_SCIF_Admin' ) ) {
 				'markup' => $return_content
 			);
 			wp_send_json( $retval );
+		}
+
+		/**
+		 * Admin Action for rendering the intial content
+		 * for the shortcode preview window.
+		 * @author Jim Barnes
+		 * @since 1.0.0
+		 **/
+		public static function render_iframe_content() {
+			ob_start();
+		?>
+			<!DOCTYPE html>
+			<html lang="en-us">
+				<head>
+					<title>Shortcode Preview Window</title>
+					<?php print self::print_preview_stylesheets(); ?>
+				</head>
+				<body>
+					<div id="scif-preview-window"></div>
+				</body>
+			</html>
+		<?php
+			echo ob_get_clean();
+		}
+
+		/**
+		 * Prints all the registered stylesheets
+		 * for the preview window.
+		 * @author Jim Barnes
+		 * @since 1.0.0
+		 **/
+		private static function print_preview_stylesheets() {
+			$stylesheets = array();
+			$stylesheets = apply_filters( 'wp_scif_get_preview_stylesheets', $stylesheets );
+
+			foreach( $stylesheets as $stylesheet ) {
+				echo '<link href="' . $stylesheet . '" rel="stylesheet">';
+			}
 		}
     }
 }
