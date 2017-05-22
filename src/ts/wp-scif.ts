@@ -72,8 +72,12 @@ namespace WPSCIF {
 
 if ( typeof jQuery !== 'undefined' ) {
     jQuery(document).ready( () => {
+        var shortcodeInterface: WPSCIF.ShortcodeInterface;
+
         tinymce.on('addeditor', (e) => {
-            new WPSCIF.ShortcodeInterface();
+            if ( ! shortcodeInterface) {
+                shortcodeInterface = new WPSCIF.ShortcodeInterface();   
+            }
         });
     });
 }
