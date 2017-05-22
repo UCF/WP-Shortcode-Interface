@@ -38,8 +38,8 @@ $shortcodes = WP_SCIF_Config::installed_shortcodes();
             }
             ?>
         </div>
-		<div id="preview-window">
-			<iframe src="<?php echo admin_url( 'admin-post.php?action=render_preview' ); ?>"></iframe>
+		<div id="scif-preview-window">
+			<iframe id="scif-preview-iframe" src="<?php echo admin_url( 'admin-post.php?action=render_preview' ); ?>"></iframe>
 		</div>
         <button class="button-primary" id="wp-scif-submit">Insert into Post</button>
     </div>

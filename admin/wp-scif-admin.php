@@ -69,6 +69,7 @@ if ( ! class_exists( 'WP_SCIF_Admin' ) ) {
 		 * @since 1.0.0
 		 **/
 		public static function render_iframe_content() {
+			$shortcode = $_GET['shortcode'] ? $_GET['shortcode'] : null;
 			ob_start();
 		?>
 			<!DOCTYPE html>
@@ -78,7 +79,9 @@ if ( ! class_exists( 'WP_SCIF_Admin' ) ) {
 					<?php print self::print_preview_stylesheets(); ?>
 				</head>
 				<body>
-					<div id="scif-preview-window"></div>
+					<div id="scif-preview-content">
+					<?php if ( $shortcode ) echo do_shortcode( $shortcode ); ?>
+					</div>
 				</body>
 			</html>
 		<?php

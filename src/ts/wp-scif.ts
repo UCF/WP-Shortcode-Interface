@@ -1,6 +1,7 @@
 /// <reference path="./wp-scif.d.ts" />
 
-declare var tinyMCE: any;
+declare var tinyMCE: any; // The WP tinymce editor
+declare var tinymce: any; // The tinymce object
 declare var send_to_editor: Function;
 declare var ajaxurl: string;
 
@@ -11,6 +12,7 @@ namespace WPSCIF {
         public $submitBtn: any;
         public $select: any;
         public activeFieldSet: FieldSet;
+        public preview: PreviewWindow;
         public editor: any;
 
         constructor() {
@@ -20,6 +22,7 @@ namespace WPSCIF {
             this.$select = this.$interface.find('#wp-scif-select');
             this.activeFieldSet = null;
             this.editor = tinyMCE.activeEditor;
+            this.preview = new PreviewWindow();
 
             this.$submitBtn.click( (e) => { this.onSubmitBtnClick(e) });
             this.$select.change( (e) => { this.onSelectChanged(e) });
@@ -62,18 +65,15 @@ namespace WPSCIF {
 
         initPreview() {
             var shortcode = this.buildShortcode();
-            jQuery.getJSON(ajaxurl, {
-                action: 'render_shortcode',
-                shortcode: shortcode
-            }, function(data) {
-                console.log(data.markup);
-            });
+            this.preview.write(shortcode);
         }
     }
 }
 
 if ( typeof jQuery !== 'undefined' ) {
-    jQuery(document).ready( function() {
-        new WPSCIF.ShortcodeInterface();
+    jQuery(document).ready( () => {
+        tinymce.on('addeditor', (e) => {
+            new WPSCIF.ShortcodeInterface();
+        });
     });
 }

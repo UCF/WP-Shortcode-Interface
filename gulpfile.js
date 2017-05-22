@@ -56,6 +56,7 @@ gulp.task('ts', function() {
     config.src.ts + '/fields/date.ts',
     config.src.ts + '/fields/color.ts',
     config.src.ts + '/fields/checkbox.ts',
+    config.src.ts + '/preview.ts',
     config.src.ts + '/fieldset.ts',
     config.src.ts + '/wp-scif.ts'
   ];
