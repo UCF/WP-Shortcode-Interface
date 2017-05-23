@@ -38,7 +38,7 @@ namespace WPSCIF {
             var paramsJoined = new Array<string>();
 
             for(var i in params) {
-                paramsJoined.push(i + '=' + params[i]);
+                paramsJoined.push(i + '=' + encodeURIComponent(params[i]));
             }
 
             return retval + paramsJoined.join('&');
