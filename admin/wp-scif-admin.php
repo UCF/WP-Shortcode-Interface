@@ -69,7 +69,8 @@ if ( ! class_exists( 'WP_SCIF_Admin' ) ) {
 		 * @since 1.0.0
 		 **/
 		public static function render_iframe_content() {
-			$shortcode = $_GET['shortcode'] ? $_GET['shortcode'] : null;
+			$shortcode = $_GET['shortcode'] ? stripslashes( $_GET['shortcode'] ) : null;
+
 			ob_start();
 		?>
 			<!DOCTYPE html>
