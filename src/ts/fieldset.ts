@@ -4,7 +4,7 @@ namespace WPSCIF {
     export class FieldSet {
         private command: string;
         private fields: Array<Fields.Field>;
-        private $container: any;
+        public $container: any;
         private $description: any;
         public allowContent: boolean;
         
@@ -19,6 +19,10 @@ namespace WPSCIF {
             $fields.each( (idx, obj) => {
                 var field = this.createField(obj);
                 this.fields.push(field);
+            });
+
+            jQuery('.wp-scif-field').on('wpscif:field:update', (e) => {
+                this.$container.trigger('wpscif:fieldset:update');
             });
 
             this.init();
@@ -36,6 +40,7 @@ namespace WPSCIF {
         public destroy() {
             this.$container.removeClass('active');
             this.$description.removeClass('active');
+            jQuery('.wp-scif-field').unbind('wpscif:field:update');
         }
 
         private createField(obj) {

@@ -26,10 +26,6 @@ namespace WPSCIF {
 
             this.$submitBtn.click( (e) => { this.onSubmitBtnClick(e) });
             this.$select.change( (e) => { this.onSelectChanged(e) });
-
-            jQuery('.wp-scif-field').on( 'wpscif:update', (e) => {
-                this.updatePreview();
-            });
         }
 
         buildShortcode() {
@@ -58,11 +54,15 @@ namespace WPSCIF {
         onSelectChanged(e) {
             if (this.activeFieldSet) {
                 this.activeFieldSet.destroy();
+                this.activeFieldSet.$container.unbind('wpscif:fieldset:update');
             }
 
             var sc = this.$select.val();
 
             this.activeFieldSet = new FieldSet(sc);
+            this.activeFieldSet.$container.on('wpscif:fieldset:update', () => {
+                this.updatePreview();
+            });
 
             this.updatePreview();
         }

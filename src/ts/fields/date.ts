@@ -4,6 +4,10 @@ namespace WPSCIF.Fields {
 
         constructor($field: any) {
             super($field);
+
+            this.$field.on('change', () => {
+                this.$field.trigger('wpscif:update');
+            });
         }
     }
 }

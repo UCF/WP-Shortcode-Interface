@@ -13,8 +13,8 @@ namespace WPSCIF.Fields {
                 }
 
                 this.timer = setTimeout( () => {
-                    this.$field.trigger('wpscif:update');
-                }, 300);
+                    this.$field.trigger('wpscif:field:update');
+                }, 500);
             });
         }
 

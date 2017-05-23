@@ -2,6 +2,10 @@ namespace WPSCIF.Fields {
     export class CheckboxField extends Field {
         constructor($field: any) {
             super($field);
+
+            this.$field.on('change', () => {
+                this.$field.trigger('wpscif:update');
+            });
         }
 
         public getValue() {
