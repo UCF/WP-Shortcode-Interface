@@ -15,6 +15,10 @@ namespace WPSCIF.Fields {
             }
             this.param = this.$field.data('scif-param');
             this.default = this.$field.data('scif-default');
+
+            this.$field.on('change', () => {
+                this.$field.trigger('wpscif:update');
+            });
         }
 
         public isValid(): boolean {

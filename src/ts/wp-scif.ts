@@ -27,7 +27,7 @@ namespace WPSCIF {
             this.$submitBtn.click( (e) => { this.onSubmitBtnClick(e) });
             this.$select.change( (e) => { this.onSelectChanged(e) });
 
-            jQuery('.wp-scif-field').change( (e) => {
+            jQuery('.wp-scif-field').on( 'wpscif:update', (e) => {
                 this.updatePreview();
             });
         }

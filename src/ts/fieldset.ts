@@ -17,8 +17,8 @@ namespace WPSCIF {
             var $fields = this.$container.find('.wp-scif-field');
 
             $fields.each( (idx, obj) => {
-                var $field = jQuery(obj);
-                this.fields.push(this.createField(obj));
+                var field = this.createField(obj);
+                this.fields.push(field);
             });
 
             this.init();

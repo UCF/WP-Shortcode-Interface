@@ -8,6 +8,10 @@ namespace WPSCIF.Fields {
             this.$field.find('option').each( (idx, obj) => {
                 this.options.push(jQuery(obj).val());
             });
+
+            this.$field.on('change', () => {
+                this.$field.trigger('wpscif:update');
+            });
         }
 
         public setDefaultValue() {
