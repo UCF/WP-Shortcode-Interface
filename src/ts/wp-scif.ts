@@ -26,6 +26,10 @@ namespace WPSCIF {
 
             this.$submitBtn.click( (e) => { this.onSubmitBtnClick(e) });
             this.$select.change( (e) => { this.onSelectChanged(e) });
+
+            jQuery('.wp-scif-field').change( (e) => {
+                this.updatePreview();
+            });
         }
 
         buildShortcode() {
@@ -60,10 +64,10 @@ namespace WPSCIF {
 
             this.activeFieldSet = new FieldSet(sc);
 
-            this.initPreview();
+            this.updatePreview();
         }
 
-        initPreview() {
+        updatePreview() {
             var shortcode = this.buildShortcode();
             this.preview.write(shortcode);
         }
