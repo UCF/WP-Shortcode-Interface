@@ -16,9 +16,9 @@ define( 'WP_SCIF__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'WP_SCIF__INCLUDES_DIR', WP_SCIF__PLUGIN_DIR . '/includes' );
 define( 'WP_SCIF__PLUGIN_URL', plugins_url( basename( dirname( __FILE__ ) ) ) );
 define( 'WP_SCIF__STATIC_URL', WP_SCIF__PLUGIN_URL . '/static' );
-define( 'WP_SCIF__INCLUDE_URL', WP_SCIF__PLUGIN_URL . '/includes' );
 define( 'WP_SCIF__SCRIPT_URL', WP_SCIF__STATIC_URL . '/js' );
 define( 'WP_SCIF__STYLES_URL', WP_SCIF__STATIC_URL . '/css' );
+define( 'WP_SCIF__IMG_URL', WP_SCIF__STATIC_URL . '/img' );
 
 include_once 'admin/wp-scif-admin.php';
 include_once 'includes/class-shortcode-interface.php';
@@ -65,6 +65,8 @@ if ( ! function_exists( 'wp_scif_init' ) ) {
         add_action( 'media_buttons', array( 'WP_SCIF_Admin', 'add_shortcode_interface' ), 10, 0 );
         // Add the shortcode interface modal to the post edit and add pages.
         add_action( 'admin_footer', array( 'WP_SCIF_Admin', 'add_shortcode_interface_modal' ), 10, 0 );
+		// Add the admin action that renders the preview window iframe content.
+		add_action( 'admin_post_render_preview', array( 'WP_SCIF_Admin', 'render_iframe_content' ), 10, 0 );
 		// Add the wp-scif javacsript file to admin screens.
 		add_action( 'admin_enqueue_scripts', array( 'WP_SCIF_Admin', 'enqueue_admin_assets' ), 10, 1 );
     }

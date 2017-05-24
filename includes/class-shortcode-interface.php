@@ -10,7 +10,8 @@ if ( ! class_exists( 'WP_SCIF_Shortcode' ) ) {
 			$name,
 			$description,
 			$fields,
-			$content;
+			$content,
+			$preview=FALSE;
 
 		/**
 		 * Primary constructor for Shortcode object
@@ -27,6 +28,7 @@ if ( ! class_exists( 'WP_SCIF_Shortcode' ) ) {
 			$this->fields = $args['fields'];
 			$this->content = $args['content'];
 			$this->description = $args['desc'];
+			$this->preview = $args['preview'];
 		}
 
 		/**
@@ -64,7 +66,7 @@ if ( ! class_exists( 'WP_SCIF_Shortcode' ) ) {
 		public function get_form_markup() {
 			ob_start();
 			?>
-			<div class="shortcode-editor shortcode-<?php echo $this->command; ?>" <?php if ( $this->content ) { ?>data-scif-allows-content<?php } ?>>
+			<div class="shortcode-editor shortcode-<?php echo $this->command; ?>" <?php if ( $this->content ) { ?>data-scif-allows-content<?php } if ( $this->preview ) { ?> data-scif-preview<?php }?>>
 			<?php
 			foreach( $this->fields as $field ) :
 			?>
@@ -167,7 +169,7 @@ if ( ! class_exists( 'WP_SCIF_Shortcode' ) ) {
 		private function get_validation_message( $field ) {
 			ob_start();
 		?>
-			<p class="error-message <?php echo $field['param']; ?>-error">
+			<p id="<?php echo $this->get_field_input_id( $field );?>-error" class="error-message">
 				<span class="required"><?php echo $field['name']; ?> is required.</span>
 			</p>
 		<?php
