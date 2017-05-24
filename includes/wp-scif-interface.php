@@ -31,7 +31,7 @@ $shortcodes = WP_SCIF_Config::installed_shortcodes();
                 </div>
             </div>
         </div>
-		<div class="cols">
+		<div class="cols" id="scif-form-body">
 			<div class="col-left" id="shortcode-editors">
 				<?php
 				foreach( $shortcodes as $shortcode ) {
