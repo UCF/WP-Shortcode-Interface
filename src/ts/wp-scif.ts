@@ -2,17 +2,46 @@
 
 declare var tinyMCE: any; // The WP tinymce editor
 declare var tinymce: any; // The tinymce object
-declare var send_to_editor: Function;
-declare var ajaxurl: string;
+declare var send_to_editor: Function; // wp function for sending to primary tinymce editor
 
 namespace WPSCIF {
+    /**
+     * Generates a new ShortcodeInterface
+     */
     export class ShortcodeInterface {
+        /**
+         * The anchor button used to open the interface
+         */
         public $toggle: any;
+        
+        /**
+         * The interface container div
+         */
         public $interface: any;
+
+        /**
+         * The button that writes the shortcode to the editor
+         */
         public $submitBtn: any;
+
+        /**
+         * The select element with the list of shortcodes.
+         */
         public $select: any;
+
+        /**
+         * The Fieldset of the active shortcode
+         */
         public activeFieldSet: FieldSet;
+
+        /**
+         * The preview window
+         */
         public preview: PreviewWindow;
+
+        /**
+         * The active tinymce editor
+         */
         public editor: any;
 
         constructor() {
@@ -29,6 +58,10 @@ namespace WPSCIF {
             this.$select.change( (e) => { this.onSelectChanged(e) });
         }
 
+        /**
+         * Gets selected content (if any) and generates the shortcode
+         * @return {string} The shortcode string
+         */
         buildShortcode() {
             var enclosingText = null;
 
@@ -39,11 +72,18 @@ namespace WPSCIF {
             return this.activeFieldSet.buildShortcode(enclosingText);
         }
 
+        /**
+         * Inserts the generated shortcode into the tinymce editor
+         */
         insertShortcode() {
             var text = this.buildShortcode();
             send_to_editor( text );
         }
 
+        /**
+         * Event handler for when then $submitBtn is clicked
+         * @param e {EventArgs}
+         */
         onSubmitBtnClick(e) {
             e.preventDefault();
 
@@ -52,6 +92,10 @@ namespace WPSCIF {
             }
         }
 
+        /**
+         * Event hanlder for when the shortcode select changes value.
+         * @param e {EventArgs}
+         */
         onSelectChanged(e) {
             if (this.activeFieldSet) {
                 this.activeFieldSet.destroy();
@@ -75,6 +119,9 @@ namespace WPSCIF {
             }
         }
 
+        /**
+         * Updates the preview window
+         */
         updatePreview() {
             var shortcode = this.buildShortcode();
             this.preview.write(shortcode);

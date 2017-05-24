@@ -1,7 +1,14 @@
 namespace WPSCIF.Fields {
     export class SelectField extends Field {
-        options: Array<string>;
+        /**
+         * An array of option strings
+         */
+        private options: Array<string>;
 
+        /**
+         * Generates a new SelectField
+         * @param $field 
+         */
         constructor($field: any) {
             super($field)
             this.options = new Array<string>();
@@ -14,6 +21,9 @@ namespace WPSCIF.Fields {
             });
         }
 
+        /**
+         * Sets the default value of the select field
+         */
         public setDefaultValue() {
             if (this.default) {
                 this.$field.val(this.default);

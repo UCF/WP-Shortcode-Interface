@@ -2,14 +2,41 @@
 
 namespace WPSCIF {
     export class FieldSet {
+        /**
+         * The shortcode command
+         */
         private command: string;
+
+        /**
+         * The array of fields
+         */
         private fields: Array<Fields.Field>;
+
+        /**
+         * The container div of the fieldset
+         */
         public $container: any;
+
+        /**
+         * The description div of the fieldset
+         */
         private $description: any;
+
+        /**
+         * Whether this shortcode can wrap around existing content
+         */
         public allowContent: boolean;
+
+        /**
+         * Whether this shortcode supports automatic preview
+         */
         public supportsPreview: boolean;
         
-        constructor(command) {
+        /**
+         * Generates a new fieldset
+         * @param command {string}
+         */
+        constructor(command: string) {
             this.command = command;
             this.$container = jQuery('.shortcode-editor.shortcode-' + command);
             this.$description = jQuery('.shortcode-desc.shortcode-' + this.command);
@@ -18,11 +45,13 @@ namespace WPSCIF {
             this.fields = new Array<Fields.Field>();
             var $fields = this.$container.find('.wp-scif-field');
 
+            // Create the fields
             $fields.each( (idx, obj) => {
                 var field = this.createField(obj);
                 this.fields.push(field);
             });
 
+            // Setup update event on each field
             jQuery('.wp-scif-field').on('wpscif:field:update', (e) => {
                 this.$container.trigger('wpscif:fieldset:update');
             });
@@ -30,6 +59,9 @@ namespace WPSCIF {
             this.init();
         }
 
+        /**
+         * Sets the default state of the fieldset
+         */
         private init() {
             this.fields.forEach( (field) => {
                 field.setDefaultValue();
@@ -39,12 +71,19 @@ namespace WPSCIF {
             this.$description.addClass('active');
         }
 
+        /**
+         * Removes active states and unbinds events
+         */
         public destroy() {
             this.$container.removeClass('active');
             this.$description.removeClass('active');
             jQuery('.wp-scif-field').unbind('wpscif:field:update');
         }
 
+        /**
+         * Creates a Field object based on the provided form element
+         * @param obj 
+         */
         private createField(obj) {
             var $field = jQuery(obj),
                 tagName = $field.prop('tagName');
@@ -66,11 +105,12 @@ namespace WPSCIF {
             }
         }
 
-        public getFields() {
-            return this.fields;
-        }
-
-        public isValid() {
+        /**
+         * Determines if the fieldset if valid
+         * Also displays errors if any are found
+         * @return {boolean}
+         */
+        public isValid(): boolean {
             var errorCount: number = 0;
 
             this.fields.forEach( (field) => {
@@ -86,6 +126,10 @@ namespace WPSCIF {
             return true;
         }
 
+        /**
+         * Gets the ourput from each field
+         * @return {Array<string>}
+         */
         public getValues() {
             var retval = Array<string>();
 
@@ -98,6 +142,11 @@ namespace WPSCIF {
             return retval;
         }
 
+        /**
+         * Builds the shortcode string
+         * @param text The text to wrap around the shortcode.
+         * @return {string}
+         */
         public buildShortcode(text='') {
             var retval = '[' + this.command;
             var outputArr = this.getValues();
