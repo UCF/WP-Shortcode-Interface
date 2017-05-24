@@ -169,7 +169,7 @@ if ( ! class_exists( 'WP_SCIF_Shortcode' ) ) {
 		private function get_validation_message( $field ) {
 			ob_start();
 		?>
-			<p id="#<?php this.get_field_input_id( $field );?>-error" class="error-message">
+			<p id="<?php echo $this->get_field_input_id( $field );?>-error" class="error-message">
 				<span class="required"><?php echo $field['name']; ?> is required.</span>
 			</p>
 		<?php
