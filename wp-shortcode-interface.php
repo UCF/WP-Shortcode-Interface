@@ -16,7 +16,6 @@ define( 'WP_SCIF__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'WP_SCIF__INCLUDES_DIR', WP_SCIF__PLUGIN_DIR . '/includes' );
 define( 'WP_SCIF__PLUGIN_URL', plugins_url( basename( dirname( __FILE__ ) ) ) );
 define( 'WP_SCIF__STATIC_URL', WP_SCIF__PLUGIN_URL . '/static' );
-define( 'WP_SCIF__INCLUDE_URL', WP_SCIF__PLUGIN_URL . '/includes' );
 define( 'WP_SCIF__SCRIPT_URL', WP_SCIF__STATIC_URL . '/js' );
 define( 'WP_SCIF__STYLES_URL', WP_SCIF__STATIC_URL . '/css' );
 define( 'WP_SCIF__IMG_URL', WP_SCIF__STATIC_URL . '/img' );
@@ -70,8 +69,6 @@ if ( ! function_exists( 'wp_scif_init' ) ) {
 		add_action( 'admin_post_render_preview', array( 'WP_SCIF_Admin', 'render_iframe_content' ), 10, 0 );
 		// Add the wp-scif javacsript file to admin screens.
 		add_action( 'admin_enqueue_scripts', array( 'WP_SCIF_Admin', 'enqueue_admin_assets' ), 10, 1 );
-		// Add the render_post admin action for preview fields.
-		add_action( 'wp_ajax_render_shortcode', array( 'WP_SCIF_Admin', 'render_shortcode' ), 10, 0 );
     }
 
     add_action( 'plugins_loaded', 'wp_scif_init', 10, 0 );

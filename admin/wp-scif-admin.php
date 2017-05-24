@@ -47,22 +47,6 @@ if ( ! class_exists( 'WP_SCIF_Admin' ) ) {
 		}
 
 		/**
-		 * Renders the provided shortcode to html
-		 * and returns the markup
-		 * @author Jim Barnes
-		 * @since 1.0.0
-		 **/
-		public static function render_shortcode() {
-			$data = $_GET['shortcode'];
-			$shortcode = html_entity_decode( $data );
-			$return_content = do_shortcode( $shortcode );
-			$retval = array(
-				'markup' => $return_content
-			);
-			wp_send_json( $retval );
-		}
-
-		/**
 		 * Admin Action for rendering the intial content
 		 * for the shortcode preview window.
 		 * @author Jim Barnes
@@ -89,6 +73,13 @@ if ( ! class_exists( 'WP_SCIF_Admin' ) ) {
 			echo ob_get_clean();
 		}
 
+		/**
+		 * Formats the entity encoded shortcode strong from a GET request
+		 * @author Jim Barnes
+		 * @since 1.0.0
+		 * @param $shortcode string | The encoded shortcode string
+		 * @return string | The decoded shortcode string
+		 **/
 		private static function format_shortcode( $shortcode ) {
 			return html_entity_decode( stripslashes( $shortcode ) );
 		}
