@@ -101,8 +101,10 @@ namespace WPSCIF {
             var outputArr = this.getValues();
             
             if (outputArr.length > 0) {
-                retval += ' ' + outputArr.join(' ') + ']';
+                retval += ' ' + outputArr.join(' ');
             }
+
+            retval += ']';
 
             if (text) {
                 retval += text;
