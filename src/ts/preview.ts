@@ -10,7 +10,7 @@ namespace WPSCIF {
             
             this.document = this.iframe.contentWindow || this.iframe.contentDocument;
             this.$container = jQuery('#scif-preview-window');
-            this.$loadIcon = jQuery('#scif-preview-load');
+            this.$loadIcon = jQuery('#scif-loading');
 
             jQuery(this.iframe).load( () => {
                 this.document = this.iframe.contentWindow || this.iframe.contentDocument;
