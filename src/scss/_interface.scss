@@ -1,3 +1,7 @@
+#wp-scif-form-inner {
+  margin-top: 1em;
+}
+
 #wp-scif-select {
   margin-bottom: 1em;
 }
@@ -6,13 +10,14 @@
   border-bottom: 1px solid #ddd;
   clear: both;
   float: left;
-  margin-bottom: 1em;
   width: 100%;
 }
 
 .col-left,
 .col-right {
   float: left;
+  padding-bottom: 1em;
+  padding-top: 1em;
 }
 
 .col-left {
@@ -51,25 +56,25 @@
 
 #scif-form-body {
   background-color: #fcfcfc;
+  margin-bottom: 1.5em;
 }
 
 #shortcode-editors,
 #scif-preview-window {
   background-color: #fff;
+  box-sizing: border-box;
   height: 350px;
+  width: 50%;
 }
 
 #shortcode-editors {
   overflow-y: scroll;
-  width: 50%;
 }
 
 #scif-preview-window {
   border-left: 1px solid #ddd;
-  box-sizing: border-box;
-  padding-left: 1em;
+  padding-left: 1.5em;
   position: relative;
-  width: calc(50% - 1em - 1px);
 
   .field-label {
     display: block;
