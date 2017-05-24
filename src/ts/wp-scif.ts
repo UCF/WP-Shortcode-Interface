@@ -23,6 +23,7 @@ namespace WPSCIF {
             this.activeFieldSet = null;
             this.editor = tinyMCE.activeEditor;
             this.preview = new PreviewWindow();
+            this.preview.hide();
 
             this.$submitBtn.click( (e) => { this.onSubmitBtnClick(e) });
             this.$select.change( (e) => { this.onSelectChanged(e) });
@@ -60,11 +61,18 @@ namespace WPSCIF {
             var sc = this.$select.val();
 
             this.activeFieldSet = new FieldSet(sc);
-            this.activeFieldSet.$container.on('wpscif:fieldset:update', () => {
-                this.updatePreview();
-            });
 
-            this.updatePreview();
+            if (this.activeFieldSet.supportsPreview) {
+                this.activeFieldSet.$container.on('wpscif:fieldset:update', () => {
+                    this.updatePreview();
+                });
+
+                this.updatePreview();
+
+                this.preview.show();
+            } else {
+                this.preview.hide();
+            }
         }
 
         updatePreview() {

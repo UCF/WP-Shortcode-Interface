@@ -11,9 +11,7 @@ if ( ! class_exists( 'WP_SCIF_Shortcode' ) ) {
 			$description,
 			$fields,
 			$content,
-			$preview=FALSE,
-			$styles=null,
-			$prefix;
+			$preview=FALSE;
 
 		/**
 		 * Primary constructor for Shortcode object
@@ -31,7 +29,6 @@ if ( ! class_exists( 'WP_SCIF_Shortcode' ) ) {
 			$this->content = $args['content'];
 			$this->description = $args['desc'];
 			$this->preview = $args['preview'];
-			$this->styles = $args['styles'];
 		}
 
 		/**
@@ -69,7 +66,7 @@ if ( ! class_exists( 'WP_SCIF_Shortcode' ) ) {
 		public function get_form_markup() {
 			ob_start();
 			?>
-			<div class="shortcode-editor shortcode-<?php echo $this->command; ?>" <?php if ( $this->content ) { ?>data-scif-allows-content<?php } ?>>
+			<div class="shortcode-editor shortcode-<?php echo $this->command; ?>" <?php if ( $this->content ) { ?>data-scif-allows-content<?php } if ( $this->preview ) { ?> data-scif-preview<?php }?>>
 			<?php
 			foreach( $this->fields as $field ) :
 			?>

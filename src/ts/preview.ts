@@ -20,6 +20,14 @@ namespace WPSCIF {
             this.iframe.src = this.buildUrl(parser, params);
         }
 
+        show() {
+            this.$container.show();
+        }
+
+        hide() {
+            this.$container.hide();
+        }
+
         parseSearch(search: string) {
             var retval = [];
             var paramString = search.substring(1);
