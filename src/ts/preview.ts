@@ -3,11 +3,23 @@ namespace WPSCIF {
         iframe: any;
         document: any;
         $container: any;
+        $loadIcon: any;
 
         constructor() {
             this.iframe = <HTMLIFrameElement>jQuery('#scif-preview-iframe').get(0);
+            
             this.document = this.iframe.contentWindow || this.iframe.contentDocument;
             this.$container = jQuery('#scif-preview-window');
+            this.$loadIcon = jQuery('#scif-loading');
+
+            jQuery(this.iframe).load( () => {
+                this.document = this.iframe.contentWindow || this.iframe.contentDocument;
+
+                this.document.onunload = () => {
+                    this.$loadIcon.show();
+                };
+                this.$loadIcon.hide();
+            });
         }
 
         write(content: string) {

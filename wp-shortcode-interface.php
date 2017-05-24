@@ -19,6 +19,7 @@ define( 'WP_SCIF__STATIC_URL', WP_SCIF__PLUGIN_URL . '/static' );
 define( 'WP_SCIF__INCLUDE_URL', WP_SCIF__PLUGIN_URL . '/includes' );
 define( 'WP_SCIF__SCRIPT_URL', WP_SCIF__STATIC_URL . '/js' );
 define( 'WP_SCIF__STYLES_URL', WP_SCIF__STATIC_URL . '/css' );
+define( 'WP_SCIF__IMG_URL', WP_SCIF__STATIC_URL . '/img' );
 
 include_once 'admin/wp-scif-admin.php';
 include_once 'includes/class-shortcode-interface.php';
