@@ -11,7 +11,8 @@ if ( ! class_exists( 'WP_SCIF_Shortcode' ) ) {
 			$description,
 			$fields,
 			$content,
-			$preview=FALSE;
+			$preview=FALSE,
+			$validation_mask=null;
 
 		/**
 		 * Primary constructor for Shortcode object
@@ -29,6 +30,7 @@ if ( ! class_exists( 'WP_SCIF_Shortcode' ) ) {
 			$this->content = $args['content'];
 			$this->description = $args['desc'];
 			$this->preview = $args['preview'];
+			$this->validation_mask = $args['validation_mask'];
 		}
 
 		/**
@@ -64,9 +66,18 @@ if ( ! class_exists( 'WP_SCIF_Shortcode' ) ) {
 		 * @return string | The html markup of the shortcode form.
 		 **/
 		public function get_form_markup() {
+			$data = array();
+			if ( $this->content ) {
+				$data[] = 'data-scif-allows-content';
+			}
+
+			if ( $this->preview ) {
+				$data[] = 'data-scif-preview';
+			}
+
 			ob_start();
 			?>
-			<div class="shortcode-editor shortcode-<?php echo $this->command; ?>" <?php if ( $this->content ) { ?>data-scif-allows-content<?php } if ( $this->preview ) { ?> data-scif-preview<?php }?>>
+			<div class="shortcode-editor shortcode-<?php echo $this->command; ?>" <?php echo implode( ' ', $data ); ?>>
 			<?php
 			foreach( $this->fields as $field ) :
 			?>
@@ -118,14 +129,8 @@ if ( ! class_exists( 'WP_SCIF_Shortcode' ) ) {
 				case 'select':
 					echo $this->get_select_field_markup( $field );
 					break;
-				case 'radio':
-					echo $this->get_radio_field_markup( $field );
-					break;
 				case 'checkbox':
 					echo $this->get_checkbox_field_markup( $field );
-					break;
-				case 'checkbox-list':
-					echo $this->get_checkbox_list_field_markup( $field );
 					break;
 				default:
 					$field['type'] = 'text';
@@ -176,6 +181,34 @@ if ( ! class_exists( 'WP_SCIF_Shortcode' ) ) {
 		}
 
 		/**
+		 * Returns a string of data attributes for the field.
+		 * 
+		 * @author Jim Barnes
+		 * @since 1.0.0
+		 * 
+		 * @param $field Array | An array of field information
+		 * @return  string | The data attributes for the field
+		 **/
+		private function get_data_attributes( $field ) {
+			$retval = array();
+			$retval[] = 'data-scif-param="' . $field['param'] . '"';
+
+			if ( $field['required'] ) {
+				$retval[] = 'data-scif-required';
+			}
+
+			if ( $field['default'] ) {
+				$retval[] = 'data-scif-default="' . $field['default'] . '"';
+			}
+
+			if ( $field['validation_mask'] ) {
+				$retval[] = 'data-scif-validation-mask="' . $field['validation_mask'] . '"';
+			}
+
+			return implode( ' ', $retval );
+		} 
+
+		/**
 		 * Returns an input field with defined type
 		 *
 		 * @author Jim Barnes
@@ -187,7 +220,7 @@ if ( ! class_exists( 'WP_SCIF_Shortcode' ) ) {
 		private function get_text_field_markup( $field ) {
 			ob_start();
 		?>
-			<input class="wp-scif-field" id="<?php echo $this->get_field_input_id( $field ); ?>" type="<?php echo $field['type']; ?>" data-scif-param="<?php echo $field['param']; ?>" data-scif-required="<?php echo $field['required'] ?>" data-scif-default="<?php echo $field['default']; ?>">
+			<input class="wp-scif-field" id="<?php echo $this->get_field_input_id( $field ); ?>" type="<?php echo $field['type']; ?>" <?php echo $this->get_data_attributes( $field ); ?>>
 		<?php
 			return ob_get_clean();
 		}
@@ -204,35 +237,12 @@ if ( ! class_exists( 'WP_SCIF_Shortcode' ) ) {
 		private function get_select_field_markup( $field ) {
 			ob_start();
 		?>
-			<select class="select wp-scif-field" id="<?php echo $this->get_field_input_id( $field ); ?>" data-scif-param="<?php echo $field['param']; ?>" data-scif-required="<?php echo $field['required']; ?>">
+			<select class="select wp-scif-field" id="<?php echo $this->get_field_input_id( $field ); ?>" <?php echo $this->get_data_attributes( $field ); ?>>
 			<?php foreach( $field['options'] as $key => $val ) : ?>
 				<option value="<?php echo $key; ?>"><?php echo $val; ?></option>
 			<?php endforeach; ?>
 			</select>
 		<?php
-			return ob_get_clean();
-		}
-
-		/**
-		 * Returns a radio list field
-		 *
-		 * @author Jim Barnes
-		 * @since 1.0.0
-		 *
-		 * @param $field Array | An array of field information
-		 * @return string | The markup to output for a particular field.
-		 **/
-		private function get_radio_field_markup( $field ) {
-			ob_start();
-			$param = $field['param'];
-			foreach( $field['options'] as $key => $val ) :
-		?>
-			<label>
-				<input class="wp-scif-field" type="radio" name="<?php echo $param; ?>" value="<?php echo $key; ?>">
-				<?php echo $val; ?>
-			</label>
-		<?php
-			endforeach;
 			return ob_get_clean();
 		}
 
@@ -253,39 +263,10 @@ if ( ! class_exists( 'WP_SCIF_Shortcode' ) ) {
 				<p class="field-desc"><?php echo $field['desc']; ?></p>
 			<?php endif; ?>
 			<label class="checkbox-label">
-				<input class="wp-scif-field" type="checkbox" name="<?php echo $field['param']; ?>" data-scif-param="<?php echo $field['param']; ?>">
+				<input class="wp-scif-field" type="checkbox" name="<?php echo $field['param']; ?>" <?php echo $this->get_data_attributes( $field ); ?>>
 				<?php echo $field['name']; ?>
 			</label>
 		<?php
-			return ob_get_clean();
-		}
-
-		/**
-		 * Returns a checkbox list field
-		 *
-		 * @author Jim Barnes
-		 * @since 1.0.0
-		 *
-		 * @param $field Array | An array of field information
-		 * @return string | The markup to output for a particular field.
-		 **/
-		private function get_checkbox_list_field_markup( $field ) {
-			ob_start();
-			$param = $field['param'];
-			foreach( $field['options'] as $key => $val ) :
-		?>
-			<strong class="field-label"><?php echo $field['name']; ?></strong>
-			<?php if ( $field['desc'] ) : ?>
-				<p class="field-desc"><?php echo $field['desc']; ?></p>
-			<?php endif; ?>
-			<div class="checkbox">
-				<label>
-					<input class="wp-scif-field checkbox-list-item" type="checkbox" name="<?php echo $param; ?>" value="<?php echo $key; ?>" data-scif-param="<?php echo $field['param']; ?>">
-					<?php echo $val; ?>
-				</label>
-			</div>
-		<?php
-			endforeach;
 			return ob_get_clean();
 		}
 	}
