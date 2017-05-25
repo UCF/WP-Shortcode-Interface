@@ -63,7 +63,14 @@ if ( ! class_exists( 'WP_SCIF_DEBUG_SC' ) ) {
 						'name'    => 'Color',
 						'desc'    => 'Use for debugging color inputs',
 						'type'    => 'color',
-						'default' => '#ffffff'
+						'options' => array(
+							'#fc0',
+							'#bc9a36',
+							'#fff',
+							'#000',
+							'#767676'
+						),
+						'default' => '#fff'
 					),
 					array(
 						'param'   => 'date',

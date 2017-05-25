@@ -95,13 +95,17 @@ namespace WPSCIF {
                 switch(type) {
                     case 'checkbox':
                         return new Fields.CheckboxField($field);
-                    case 'color':
-                        return new Fields.ColorField($field);
-                    case 'date':
-                        return new Fields.DateField($field);
                     case 'email':
                         return new Fields.EmailField($field);
                     case 'text':
+                        if ($field.hasClass('wp-scif-date')) {
+                            return new Fields.DateField($field);
+                        }
+
+                        if ($field.hasClass('wp-scif-color')) {
+                            return new Fields.ColorField($field);
+                        }
+
                         return new Fields.TextField($field);
                     default:
                         return new Fields.TextField($field);

@@ -122,9 +122,13 @@ if ( ! class_exists( 'WP_SCIF_Shortcode' ) ) {
 				case 'text':
 				case 'email':
 				case 'number':
-				case 'color':
-				case 'date':
 					echo $this->get_text_field_markup( $field );
+					break;
+				case 'color':
+					echo $this->get_color_field_markup( $field );
+					break;
+				case 'date':
+					echo $this->get_date_field_markup( $field );
 					break;
 				case 'select':
 					echo $this->get_select_field_markup( $field );
@@ -205,6 +209,10 @@ if ( ! class_exists( 'WP_SCIF_Shortcode' ) ) {
 				$retval[] = 'data-scif-validation-mask="' . $field['validation_mask'] . '"';
 			}
 
+			if ( $field['type'] === 'color' and is_array( $field['options'] ) ) {
+				$retval[] = 'data-scif-palette="' . implode(',', $field['options']) . '"';
+			}
+
 			return implode( ' ', $retval );
 		} 
 
@@ -221,6 +229,45 @@ if ( ! class_exists( 'WP_SCIF_Shortcode' ) ) {
 			ob_start();
 		?>
 			<input class="wp-scif-field" id="<?php echo $this->get_field_input_id( $field ); ?>" type="<?php echo $field['type']; ?>" <?php echo $this->get_data_attributes( $field ); ?>>
+		<?php
+			return ob_get_clean();
+		}
+
+		/**
+		 * Returns a color input field
+		 *
+		 * @author Jim Barnes
+		 * @since 1.0.0
+		 *
+		 * @param $field Array | An array of field information
+		 * @return string | The markup to output for a particular field.
+		 **/
+		private function get_color_field_markup( $field ) {
+			wp_enqueue_style( 'wp-color-picker' );
+
+			ob_start();
+		?>
+			<input class="wp-scif-field wp-scif-color" id="<?php echo $this->get_field_input_id( $field ); ?>" type="text" <?php echo $this->get_data_attributes( $field ); ?>>
+		<?php
+			return ob_get_clean();
+		}
+
+		/**
+		 * Returns a date input field
+		 *
+		 * @author Jim Barnes
+		 * @since 1.0.0
+		 *
+		 * @param $field Array | An array of field information
+		 * @return string | The markup to output for a particular field.
+		 **/
+		private function get_date_field_markup( $field ) {
+			wp_enqueue_style( 'jquery-ui-theme', '//code.jquery.com/ui/1.12.1/themes/ui-darkness/jquery-ui.css' );
+			wp_enqueue_script( 'jquery-ui-datepicker' );
+
+			ob_start();
+		?>
+			<input class="wp-scif-field wp-scif-date" id="<?php echo $this->get_field_input_id( $field ); ?>" type="text" <?php echo $this->get_data_attributes( $field ); ?>>
 		<?php
 			return ob_get_clean();
 		}
