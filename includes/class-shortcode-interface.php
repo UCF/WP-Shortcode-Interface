@@ -111,6 +111,7 @@ if ( ! class_exists( 'WP_SCIF_Shortcode' ) ) {
 				case 'text':
 				case 'email':
 				case 'number':
+				case 'color':
 				case 'date':
 					echo $this->get_text_field_markup( $field );
 					break;
@@ -131,10 +132,8 @@ if ( ! class_exists( 'WP_SCIF_Shortcode' ) ) {
 					echo $this->get_text_field_markup( $field );
 					break;
 			}
-
-			if ( $field['required'] ) {
-				echo $this->get_validation_message( $field );
-			}
+			
+			echo $this->get_validation_message( $field );
 
 			return ob_get_clean();
 		}
@@ -170,7 +169,7 @@ if ( ! class_exists( 'WP_SCIF_Shortcode' ) ) {
 			ob_start();
 		?>
 			<p id="<?php echo $this->get_field_input_id( $field );?>-error" class="error-message">
-				<span class="required"><?php echo $field['name']; ?> is required.</span>
+				<span class="error-message required"></span>
 			</p>
 		<?php
 			return ob_get_clean();
@@ -188,7 +187,7 @@ if ( ! class_exists( 'WP_SCIF_Shortcode' ) ) {
 		private function get_text_field_markup( $field ) {
 			ob_start();
 		?>
-			<input class="wp-scif-field" id="<?php echo $this->get_field_input_id( $field ); ?>" type="<?php echo $field['type']; ?>" data-scif-param="<?php echo $field['param']; ?>" data-scif-required="<?php echo $field['required'] ?>">
+			<input class="wp-scif-field" id="<?php echo $this->get_field_input_id( $field ); ?>" type="<?php echo $field['type']; ?>" data-scif-param="<?php echo $field['param']; ?>" data-scif-required="<?php echo $field['required'] ?>" data-scif-default="<?php echo $field['default']; ?>">
 		<?php
 			return ob_get_clean();
 		}

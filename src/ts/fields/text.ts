@@ -1,11 +1,6 @@
 namespace WPSCIF.Fields {
     export class TextField extends Field {
         /**
-         * Timer for debouncing.
-         */
-        private timer: any;
-
-        /**
          * Generates a new TextField
          * @param $field 
          */

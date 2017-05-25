@@ -51,11 +51,13 @@ gulp.task('tslint', function() {
 gulp.task('ts', function() {
   var tsfiles = [
     config.src.ts + '/fields/field.ts',
-    config.src.ts + '/fields/text.ts',
-    config.src.ts + '/fields/select.ts',
-    config.src.ts + '/fields/date.ts',
-    config.src.ts + '/fields/color.ts',
     config.src.ts + '/fields/checkbox.ts',
+    config.src.ts + '/fields/color.ts',
+    config.src.ts + '/fields/date.ts',
+    config.src.ts + '/fields/email.ts',
+    config.src.ts + '/fields/number.ts',
+    config.src.ts + '/fields/select.ts',
+    config.src.ts + '/fields/text.ts',
     config.src.ts + '/preview.ts',
     config.src.ts + '/fieldset.ts',
     config.src.ts + '/wp-scif.ts'

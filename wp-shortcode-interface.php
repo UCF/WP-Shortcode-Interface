@@ -20,6 +20,8 @@ define( 'WP_SCIF__SCRIPT_URL', WP_SCIF__STATIC_URL . '/js' );
 define( 'WP_SCIF__STYLES_URL', WP_SCIF__STATIC_URL . '/css' );
 define( 'WP_SCIF__IMG_URL', WP_SCIF__STATIC_URL . '/img' );
 
+define( 'WP_SCIF__DEBUG', FALSE ); // Should ALWAYS be set to False prior to pushing updates.
+
 include_once 'admin/wp-scif-admin.php';
 include_once 'includes/class-shortcode-interface.php';
 include_once 'includes/wp-scif-config.php';
@@ -50,6 +52,17 @@ if ( ! function_exists( 'wp_scif_plugin_deactivated' ) ) {
     }
 
     register_deactivation_hook( WP_SCIF__PLUGIN_FILE, 'wp_scif_plugin_deactivated' );
+}
+
+if ( WP_SCIF__DEBUG ) {
+	include_once 'debug/wp-scif-debug-shortcode.php';
+
+	function wp_scif_debug_init() {
+		add_shortcode( 'debug_sc', array( 'WP_SCIF_DEBUG_SC', 'shortcode' ) );
+		add_filter( 'wp_scif_add_shortcode', array( 'WP_SCIF_DEBUG_SC', 'register_interface' ), 10, 1 );
+	}
+
+	add_action( 'init', 'wp_scif_debug_init' );
 }
 
 if ( ! function_exists( 'wp_scif_init' ) ) {

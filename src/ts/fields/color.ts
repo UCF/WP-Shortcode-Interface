@@ -7,6 +7,9 @@ namespace WPSCIF.Fields {
         constructor($field: any) {
             super($field);
 
+            this.inputMask = this.inputMask || '(\#[0-9a-fA-F]{6}|rgb\(\d{1,3},\ ?\d{1,3},\ ?\d{1,3}\)|rgba\(\d{1,3},\ ?\d{1,3},\ ?\d{1,3},\ ?\d{1,3}\.?\d?\))';
+            this.validationMessage = 'Please, enter a valid hex color value, rgb or rgba.';
+
             this.$field.on('change', () => {
                 this.$field.trigger('wpscif:update');
             });

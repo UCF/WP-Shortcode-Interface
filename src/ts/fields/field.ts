@@ -14,6 +14,11 @@ namespace WPSCIF.Fields {
         protected $field: any;
 
         /**
+         * The field name
+         */
+        protected fieldName: string;
+
+        /**
          * Indicates the field is required
          */
         public required: boolean;
@@ -31,7 +36,32 @@ namespace WPSCIF.Fields {
         /**
          * The id of the field
          */
-        private fieldID: string;
+        protected fieldID: string;
+
+        /**
+         * The container of the error message.
+         */
+        protected $errorContainer: any;
+
+        /**
+         * The span containing the error message
+         */
+        protected $errorMessage: any;
+
+        /**
+         * Input mask for validation
+         */
+        protected inputMask: string;
+
+        /**
+         * Message to display when regex validation fails.
+         */
+        protected validationMessage: string;
+
+        /**
+         * Timer for debouncing
+         */
+        protected timer: any;
 
         /**
          * Returns a new Field object.
@@ -40,12 +70,25 @@ namespace WPSCIF.Fields {
         constructor($field: any) {
             this.$field = $field;
             this.fieldID = this.$field.attr('id');
+            this.fieldName = jQuery('label[for=' + this.fieldID + ']').text();
             this.required = <boolean>this.$field.data('scif-required');
             if (typeof this.required === "undefined") {
                 this.required = false;
             }
             this.param = this.$field.data('scif-param');
             this.default = this.$field.data('scif-default');
+            this.$errorContainer = jQuery('#' + this.fieldID + '-error');
+    
+            this.$errorMessage = this.$errorContainer.find('.error-message');
+
+            // Assign input mask if it exists as a data attr
+            var mask = this.$field.data('scif-validation-mask');
+            if ( mask ) {
+                this.inputMask = mask;
+            }
+
+            // Be sure to override this message on specific field types.
+            this.validationMessage = 'Please enter a valid value.';
         }
 
         /**
@@ -53,13 +96,27 @@ namespace WPSCIF.Fields {
          * @return {boolean}
          */
         public isValid(): boolean {
-            var id = '#' + this.fieldID + '-' + this.param + '-error';
+            var value = this.getValue();
+
             // If required, it must have value
-            if (this.required && ! this.getValue()) {
-                jQuery(id).addClass('active');
+            if (this.required && ! value) {
+                this.$errorContainer.addClass('active');
+                this.$errorMessage.text(this.fieldName + ' is required.');
                 return false;
             }
-            jQuery(id).removeClass('active');
+
+            if (value && this.inputMask) {
+                var re = new RegExp(this.inputMask);
+
+                if (!re.test(value)) {
+                    this.$errorContainer.addClass('active');
+                    this.$errorMessage.text(this.validationMessage);
+                    return false;
+                }
+            }
+
+            this.$errorContainer.removeClass('active');
+            this.$errorMessage = '';
             return true;
         }
 

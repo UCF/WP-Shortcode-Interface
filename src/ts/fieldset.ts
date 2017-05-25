@@ -93,12 +93,16 @@ namespace WPSCIF {
             } else if (tagName === 'INPUT') {
                 var type = $field.attr('type');
                 switch(type) {
-                    case 'text':
-                        return new Fields.TextField($field);
-                    case 'date':
-                        return new Fields.DateField($field);
                     case 'checkbox':
                         return new Fields.CheckboxField($field);
+                    case 'color':
+                        return new Fields.ColorField($field);
+                    case 'date':
+                        return new Fields.DateField($field);
+                    case 'email':
+                        return new Fields.EmailField($field);
+                    case 'text':
+                        return new Fields.TextField($field);
                     default:
                         return new Fields.TextField($field);
                 }
@@ -114,7 +118,7 @@ namespace WPSCIF {
             var errorCount: number = 0;
 
             this.fields.forEach( (field) => {
-                if (!field.isValid) {
+                if (!field.isValid()) {
                     errorCount++;
                 }
             });
