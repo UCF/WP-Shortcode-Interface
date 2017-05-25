@@ -19,7 +19,7 @@ namespace WPSCIF.Fields {
                 color: this.default
             });
 
-            this.inputMask = this.inputMask || '(\#[0-9a-fA-F]{6}|rgb\(\d{1,3},\ ?\d{1,3},\ ?\d{1,3}\)|rgba\(\d{1,3},\ ?\d{1,3},\ ?\d{1,3},\ ?\d{1,3}\.?\d?\))';
+            this.inputMask = this.inputMask || '\#([0-9a-fA-F]{3}|\#([0-9a-fA-F]{6}|rgb\(\d{1,3},\ ?\d{1,3},\ ?\d{1,3}\)|rgba\(\d{1,3},\ ?\d{1,3},\ ?\d{1,3},\ ?\d{1,3}\.?\d?\))';
             this.validationMessage = 'Please, enter a valid hex color value, rgb or rgba.';
 
             this.$field.on('change', () => {
