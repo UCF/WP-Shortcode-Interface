@@ -188,7 +188,7 @@ if ( ! class_exists( 'WP_SCIF_Shortcode' ) ) {
 		private function get_text_field_markup( $field ) {
 			ob_start();
 		?>
-			<input class="wp-scif-field" id="<?php echo $this->get_field_input_id( $field ); ?>" type="<?php echo $field['type']; ?>" data-scif-param="<?php echo $field['param']; ?>" data-scif-required="<?php echo $field['required'] ?>">
+			<input class="wp-scif-field" id="<?php echo $this->get_field_input_id( $field ); ?>" type="<?php echo $field['type']; ?>" data-scif-param="<?php echo $field['param']; ?>" data-scif-required="<?php echo $field['required']; ?>" <?php if ( isset( $field['default'] ) ) { echo 'data-scif-default="' . $field['default'] . '"'; } ?>>
 		<?php
 			return ob_get_clean();
 		}
@@ -205,7 +205,7 @@ if ( ! class_exists( 'WP_SCIF_Shortcode' ) ) {
 		private function get_select_field_markup( $field ) {
 			ob_start();
 		?>
-			<select class="select wp-scif-field" id="<?php echo $this->get_field_input_id( $field ); ?>" data-scif-param="<?php echo $field['param']; ?>" data-scif-required="<?php echo $field['required']; ?>">
+			<select class="select wp-scif-field" id="<?php echo $this->get_field_input_id( $field ); ?>" data-scif-param="<?php echo $field['param']; ?>" data-scif-required="<?php echo $field['required']; ?>" <?php if ( isset( $field['default'] ) ) { echo 'data-scif-default="' . $field['default'] . '"'; } ?>>
 			<?php foreach( $field['options'] as $key => $val ) : ?>
 				<option value="<?php echo $key; ?>"><?php echo $val; ?></option>
 			<?php endforeach; ?>
@@ -254,7 +254,7 @@ if ( ! class_exists( 'WP_SCIF_Shortcode' ) ) {
 				<p class="field-desc"><?php echo $field['desc']; ?></p>
 			<?php endif; ?>
 			<label class="checkbox-label">
-				<input class="wp-scif-field" type="checkbox" name="<?php echo $field['param']; ?>" data-scif-param="<?php echo $field['param']; ?>">
+				<input class="wp-scif-field" type="checkbox" name="<?php echo $field['param']; ?>" data-scif-param="<?php echo $field['param']; ?>" <?php if ( isset( $field['default'] ) ) { echo 'data-scif-default="' . ( $field['default'] ? 'true' : 'false' ) . '"'; } ?>>
 				<?php echo $field['name']; ?>
 			</label>
 		<?php

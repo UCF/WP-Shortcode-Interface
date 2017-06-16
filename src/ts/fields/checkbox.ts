@@ -2,7 +2,7 @@ namespace WPSCIF.Fields {
     export class CheckboxField extends Field {
         /**
          * Constructors a new CheckboxField
-         * @param $field 
+         * @param $field
          */
         constructor($field: any) {
             super($field);
@@ -24,7 +24,7 @@ namespace WPSCIF.Fields {
          * Sets the default value of the field
          */
         public setDefaultValue() {
-            if (this.default !== null ) {
+            if (this.default) {
                 this.$field.prop('checked', true);
             } else {
                 this.$field.prop('checked', false);
