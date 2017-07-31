@@ -20,8 +20,8 @@ Provides an interface for inserting shortcodes into the WordPress WYSIWYG editor
 
 ## Changelog ##
 
-### 1.0.0 ###
-* Initial release
+### 0.1.0 ###
+* Initial prerelease
 
 
 ## Upgrade Notice ##
