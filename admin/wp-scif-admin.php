@@ -26,7 +26,7 @@ if ( ! class_exists( 'WP_SCIF_Admin' ) ) {
          **/
         public static function add_shortcode_interface_modal() {
             $screen = get_current_screen();
-			
+
             if ( $screen->base === 'post' ) {
                 include_once( WP_SCIF__INCLUDES_DIR . '/wp-scif-interface.php' );
             }
@@ -34,7 +34,7 @@ if ( ! class_exists( 'WP_SCIF_Admin' ) ) {
 
 		/**
 		 * Adds the wp-scif javascript to the admin scripts.
-		 * 
+		 *
 		 * @author Jim Barnes
 		 * @since 1.0.0
 		 **/
@@ -53,7 +53,7 @@ if ( ! class_exists( 'WP_SCIF_Admin' ) ) {
 		 * @since 1.0.0
 		 **/
 		public static function render_iframe_content() {
-			$shortcode = $_GET['shortcode'] ? self::format_shortcode( $_GET['shortcode'] ) : null;
+			$shortcode = isset( $_GET['shortcode'] ) ? self::format_shortcode( $_GET['shortcode'] ) : null;
 
 			ob_start();
 		?>

@@ -25,10 +25,52 @@ if ( ! class_exists( 'WP_SCIF_Shortcode' ) ) {
 		public function __construct( $args ) {
 			$this->command = $args['command'];
 			$this->name = isset( $args['name'] ) ? $args['name'] : $args['command'];
-			$this->fields = $args['fields'];
-			$this->content = $args['content'];
-			$this->description = $args['desc'];
-			$this->preview = $args['preview'];
+			$this->fields = $this->normalize_fields( $args['fields'] );
+			$this->content = isset( $args['content'] ) ? $args['content'] : false;
+			$this->description = isset( $args['desc'] ) ? $args['desc'] : '';
+			$this->preview = isset( $args['preview'] ) ? $args['preview'] : false;
+		}
+
+		/**
+		 * Takes an array of fields and ensures all possible field options
+		 * are set, with sane defaults as necessary.
+		 *
+		 * @author Jo Dickson
+		 * @since 1.0.0
+		 *
+		 * @param $args Array | Array of field settings
+		 * @return Normalized array of field settings
+		 **/
+		public function normalize_fields( $fields ) {
+			$fields_normalized = array();
+
+			if ( is_array( $fields ) ) {
+				foreach ( $fields as $field ) {
+					// Invalidate the field if 'param' isn't set
+					if ( !isset( $field['param'] ) ) { continue; }
+
+					$field_normalized = array(
+						'param'    => $field['param'],
+						'name'     => isset( $field['name'] ) ? $field['name'] : $field['param'],
+						'type'     => isset( $field['type'] ) ? $field['type'] : 'text',
+						'desc'     => isset( $field['desc'] ) ? $field['desc'] : '',
+						'default'  => isset( $field['default'] ) ? $field['default'] : '',
+						'required' => isset( $field['required'] ) ? $field['required'] : false
+					);
+
+					if (
+						$field_normalized['type'] === 'select'
+						|| $field_normalized['type'] === 'radio'
+						|| $field_normalized['type'] === 'checkbox-list'
+					) {
+						$field_normalized['options'] = isset( $field['options'] ) ? $field['options'] : array( $field_normalized['default'] );
+					}
+
+					$fields_normalized[] = $field_normalized;
+				}
+			}
+
+			return $fields_normalized;
 		}
 
 		/**
