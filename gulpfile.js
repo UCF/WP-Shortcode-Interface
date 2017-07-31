@@ -9,7 +9,8 @@ var gulp         = require('gulp'),
     uglify       = require('gulp-uglify'),
     concat       = require('gulp-concat'),
     rename       = require('gulp-rename'),
-    tsproject    = ts.createProject('tsconfig.json');
+    tsproject    = ts.createProject('tsconfig.json'),
+    readme       = require('gulp-readme-to-markdown');
 
 var config = {
   src: {
@@ -72,9 +73,26 @@ gulp.task('ts', function() {
 
 gulp.task('js', ['tslint', 'ts']);
 
+
+//
+// Readme
+//
+
+// Create a Github-flavored markdown file from the plugin readme.txt
+gulp.task('readme', function() {
+  return gulp.src(['readme.txt'])
+    .pipe(readme({
+      details: false,
+      screenshot_ext: [],
+    }))
+    .pipe(gulp.dest('.'));
+});
+
+
 gulp.task('watch', function() {
   gulp.watch(config.src.scss + '/**/*.scss', ['css']);
   gulp.watch(config.src.ts + '/**/*.ts', ['js']);
+  gulp.watch('readme.txt', ['readme']);
 });
 
-gulp.task('default', ['js']);
+gulp.task('default', ['js', 'readme']);

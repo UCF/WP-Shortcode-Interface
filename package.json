@@ -1,6 +1,6 @@
 {
   "name": "wp-shortcode-interface",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Provides a shortcode interface for the WordPress wysiwyg editor.",
   "repository": {
     "type": "git",
@@ -19,6 +19,7 @@
     "gulp-autoprefixer": "^3.1.1",
     "gulp-clean-css": "^3.2.0",
     "gulp-concat": "^2.6.1",
+    "gulp-readme-to-markdown": "^0.2.1",
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^3.1.0",
     "gulp-scss-lint": "^0.4.0",
