@@ -3,6 +3,7 @@
  * Shortcode Interface
  **/
 $shortcodes = WP_SCIF_Config::installed_shortcodes();
+$shortcodes_grouped = WP_SCIF_Config::installed_shortcodes_grouped( $shortcodes );
 ?>
 <div id="wp-scif-form" style="display:none">
     <div id="wp-scif-form-inner">
@@ -15,9 +16,17 @@ $shortcodes = WP_SCIF_Config::installed_shortcodes();
                 <select name="wp-scif-select" id="wp-scif-select">
                     <option value="">--Choose Shortcode--</option>
                     <?php
-                    foreach( $shortcodes as $shortcode ) {
-                        echo $shortcode->get_option_markup();
-                    }
+                    foreach( $shortcodes_grouped as $group=>$shortcodes ):
+					?>
+						<optgroup label="<?php echo $group; ?>">
+						<?php
+						foreach ( $shortcodes as $shortcode ) {
+							echo $shortcode->get_option_markup();
+						}
+						?>
+                        </optgroup>
+					<?php
+                    endforeach;
                     ?>
                 </select>
             </div>
