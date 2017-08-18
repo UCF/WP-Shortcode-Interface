@@ -42,6 +42,7 @@ if ( ! class_exists( 'WP_SCIF_Config' ) ) {
 				}
 			}
 
+			ksort( $retval );
 			return $retval;
 		}
 	}
