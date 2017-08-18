@@ -18,7 +18,7 @@ $shortcodes_grouped = WP_SCIF_Config::installed_shortcodes_grouped( $shortcodes 
                     <?php
                     foreach( $shortcodes_grouped as $group=>$group_items ):
 					?>
-						<optgroup label="<?php echo $group; ?>">
+						<optgroup label="<?php echo esc_attr( $group ); ?>">
 						<?php
 						foreach ( $group_items as $shortcode ) {
 							echo $shortcode->get_option_markup();
