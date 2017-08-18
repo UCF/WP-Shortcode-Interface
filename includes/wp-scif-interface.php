@@ -3,34 +3,43 @@
  * Shortcode Interface
  **/
 $shortcodes = WP_SCIF_Config::installed_shortcodes();
+$shortcodes_grouped = WP_SCIF_Config::installed_shortcodes_grouped( $shortcodes );
 ?>
 <div id="wp-scif-form" style="display:none">
-    <div id="wp-scif-form-inner">
-        <label for="wp-scif-select">Select a shortcode: </label>
-        <p class="help-text">
-            This shortcode will be inserted into the editor when you click the "Insert into Post" button.
-        </p>
-        <div class="cols">
-            <div class="col-left">
-                <select name="wp-scif-select" id="wp-scif-select">
-                    <option value="">--Choose Shortcode--</option>
-                    <?php
-                    foreach( $shortcodes as $shortcode ) {
-                        echo $shortcode->get_option_markup();
-                    }
-                    ?>
-                </select>
-            </div>
-            <div class="col-right">
-                <div id="shortcode-descriptions">
-                    <?php
-                    foreach( $shortcodes as $shortcode ) {
-                        echo $shortcode->get_description_markup();
-                    }
-                    ?>
-                </div>
-            </div>
-        </div>
+	<div id="wp-scif-form-inner">
+		<label for="wp-scif-select">Select a shortcode: </label>
+		<p class="help-text">
+			This shortcode will be inserted into the editor when you click the "Insert into Post" button.
+		</p>
+		<div class="cols">
+			<div class="col-left">
+				<select name="wp-scif-select" id="wp-scif-select">
+					<option value="">--Choose Shortcode--</option>
+					<?php
+					foreach( $shortcodes_grouped as $group=>$group_items ):
+					?>
+						<optgroup label="<?php echo esc_attr( $group ); ?>">
+						<?php
+						foreach ( $group_items as $shortcode ) {
+							echo $shortcode->get_option_markup();
+						}
+						?>
+						</optgroup>
+					<?php
+					endforeach;
+					?>
+				</select>
+			</div>
+			<div class="col-right">
+				<div id="shortcode-descriptions">
+					<?php
+					foreach( $shortcodes as $shortcode ) {
+						echo $shortcode->get_description_markup();
+					}
+					?>
+				</div>
+			</div>
+		</div>
 		<div class="cols" id="scif-form-body">
 			<div class="col-left" id="shortcode-editors">
 				<?php
@@ -46,5 +55,5 @@ $shortcodes = WP_SCIF_Config::installed_shortcodes();
 			</div>
 		</div>
 		<button class="button-primary" id="wp-scif-submit">Insert into Post</button>
-    </div>
+	</div>
 </div>
