@@ -11,7 +11,8 @@ if ( ! class_exists( 'WP_SCIF_Shortcode' ) ) {
 			$description,
 			$fields,
 			$content,
-			$preview=FALSE;
+			$preview=FALSE,
+			$group;
 
 		/**
 		 * Primary constructor for Shortcode object

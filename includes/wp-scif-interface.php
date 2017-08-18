@@ -16,11 +16,11 @@ $shortcodes_grouped = WP_SCIF_Config::installed_shortcodes_grouped( $shortcodes 
                 <select name="wp-scif-select" id="wp-scif-select">
                     <option value="">--Choose Shortcode--</option>
                     <?php
-                    foreach( $shortcodes_grouped as $group=>$shortcodes ):
+                    foreach( $shortcodes_grouped as $group=>$group_items ):
 					?>
 						<optgroup label="<?php echo $group; ?>">
 						<?php
-						foreach ( $shortcodes as $shortcode ) {
+						foreach ( $group_items as $shortcode ) {
 							echo $shortcode->get_option_markup();
 						}
 						?>
