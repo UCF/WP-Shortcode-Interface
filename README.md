@@ -20,6 +20,10 @@ Provides an interface for inserting shortcodes into the WordPress WYSIWYG editor
 
 ## Changelog ##
 
+### 0.2.0 ###
+Enhancements:
+* Added ability to assign a shortcode to a group for better organization within the shortcode select dropdown
+
 ### 0.1.0 ###
 * Initial prerelease
 

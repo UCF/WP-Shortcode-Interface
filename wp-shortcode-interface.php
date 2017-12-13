@@ -2,7 +2,7 @@
 /*
 Plugin Name: WP Shortcode Interface
 Description: Creates a form that provides the available parameters for defined shortcodes.
-Version: 1.0.0
+Version: 0.2.0
 Author: UCF Web Communications
 Tags: shortcode, wysiwyg, shortcode interface
 License: GPL3
@@ -41,7 +41,7 @@ if ( ! function_exists( 'wp_scif_plugin_activated' ) ) {
 if ( ! function_exists( 'wp_scif_plugin_deactivated' ) ) {
     /**
      * Triggered when the plugin is deactivated.
-     * 
+     *
      * @author Jim Barnes
      * @since 1.0.0
      **/
@@ -56,7 +56,7 @@ if ( ! function_exists( 'wp_scif_init' ) ) {
     /**
      * Triggered when all plugins are loaded.
      * Primary hooks and filters should be called here.
-     * 
+     *
      * @author Jim Barnes
      * @since 1.0.0
      **/
