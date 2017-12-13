@@ -11,7 +11,8 @@ if ( ! class_exists( 'WP_SCIF_Shortcode' ) ) {
 			$description,
 			$fields,
 			$content,
-			$preview=FALSE;
+			$preview=FALSE,
+			$group;
 
 		/**
 		 * Primary constructor for Shortcode object
@@ -29,6 +30,7 @@ if ( ! class_exists( 'WP_SCIF_Shortcode' ) ) {
 			$this->content = isset( $args['content'] ) ? $args['content'] : false;
 			$this->description = isset( $args['desc'] ) ? $args['desc'] : '';
 			$this->preview = isset( $args['preview'] ) ? $args['preview'] : false;
+			$this->group = isset( $args['group'] ) ? $args['group'] : apply_filters( 'wp_scif_default_sc_group', 'Uncategorized' );
 		}
 
 		/**
