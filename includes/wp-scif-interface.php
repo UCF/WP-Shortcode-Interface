@@ -50,7 +50,7 @@ $shortcodes_grouped = WP_SCIF_Config::installed_shortcodes_grouped( $shortcodes 
 			</div>
 			<div class="col-right" id="scif-preview-window">
 				<strong class="field-label">Preview</strong>
-				<img id="scif-loading" src="<?php echo admin_url( '/wp-admin/images/spinner-2x.gif' ); ?>" alt="Loading..." style="display: none;">
+				<img id="scif-loading" src="<?php echo admin_url( 'images/spinner-2x.gif' ); ?>" alt="Loading..." style="display: none;">
 				<iframe id="scif-preview-iframe" src="<?php echo admin_url( 'admin-post.php?action=render_preview' ); ?>"></iframe>
 			</div>
 		</div>
