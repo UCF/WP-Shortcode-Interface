@@ -1,6 +1,6 @@
 {
   "name": "wp-shortcode-interface",
-  "version": "0.1.0",
+  "version": "0.2.1",
   "description": "Provides a shortcode interface for the WordPress wysiwyg editor.",
   "repository": {
     "type": "git",

@@ -2,8 +2,9 @@
 Contributors: ucfwebcom
 Tags: ucf, shortcode, wysiwyg
 Requires at least: 4.7.3
-Tested up to: 4.7.3
-Stable tag: 0.2.1
+Tested up to: 5.3
+Stable tag: 0.2.2
+Requires PHP: 5.4
 License: GPLv3 or later
 License URI: http://www.gnu.org/copyleft/gpl-3.0.html
 
@@ -26,6 +27,11 @@ Provides an interface for inserting shortcodes into the WordPress WYSIWYG editor
 
 
 == Changelog ==
+
+= 0.2.2 =
+Enhancements:
+* Added Github updater support
+* Added minimum required PHP version
 
 = 0.2.1 =
 Bug Fixes:

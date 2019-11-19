@@ -20,6 +20,11 @@ Provides an interface for inserting shortcodes into the WordPress WYSIWYG editor
 
 ## Changelog ##
 
+### 0.2.2 ###
+Enhancements:
+* Added Github updater support
+* Added minimum required PHP version
+
 ### 0.2.1 ###
 Bug Fixes:
 * Fixed the generated url for a spinner icon used in the admin interface that could cause internal redirect problems.
