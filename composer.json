@@ -1,0 +1,8 @@
+{
+    "name": "ucf/wp-shortcode-interface",
+    "description": "Creates a form that provides the available parameters for defined shortcodes.",
+    "type": "wordpress-plugin",
+    "require": {
+        "composer/installers": "~1.0"
+    }
+}

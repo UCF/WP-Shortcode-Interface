@@ -20,6 +20,10 @@ Provides an interface for inserting shortcodes into the WordPress WYSIWYG editor
 
 ## Changelog ##
 
+### 0.2.3 ###
+Enhancements:
+* Added composer file.
+
 ### 0.2.2 ###
 Enhancements:
 * Added Github updater support

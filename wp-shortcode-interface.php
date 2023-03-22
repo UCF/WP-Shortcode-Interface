@@ -2,7 +2,7 @@
 /*
 Plugin Name: WP Shortcode Interface
 Description: Creates a form that provides the available parameters for defined shortcodes.
-Version: 0.2.2
+Version: 0.2.3
 Author: UCF Web Communications
 Tags: shortcode, wysiwyg, shortcode interface
 License: GPL3
